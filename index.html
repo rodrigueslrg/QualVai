@@ -1044,30 +1044,30 @@
             video.addEventListener('loadedmetadata', function() {
                 this.currentTime = startTime;
             });
-        // ===== LÓGICA DE PESQUISA (TEXTO) =====
+    // ===== LÓGICA DE PESQUISA MELHORADA =====
         const searchInput = document.getElementById('searchInput');
 
         searchInput.addEventListener('input', (e) => {
-            const termo = e.target.value.toLowerCase();
-            
-            // Se o campo estiver vazio, mostra tudo
-            if (termo.length === 0) {
-                renderPlaces(placesData);
-                return;
-            }
-
-            // Filtra os lugares pelo nome, categoria ou tags
-            const filtrados = placesData.filter(place => {
-                const nomeOk = place.name.toLowerCase().includes(termo);
-                const categoriaOk = place.category.toLowerCase().includes(termo);
-                const tagsOk = place.tags.some(tag => tag.toLowerCase().includes(termo));
-                
-                return nomeOk || categoriaOk || tagsOk;
-            });
-
-            renderPlaces(filtrados);
-        });
+        const termoCompleto = e.target.value.toLowerCase().trim();
+    
+        if (termoCompleto.length === 0) {
+            renderPlaces(placesData);
+            return;
         }
+
+        // Divide a busca em palavras (ex: "pizza" e "italiana")
+        const palavrasBusca = termoCompleto.split(/\s+/);
+
+        const filtrados = placesData.filter(place => {
+            const textoLocal = `${place.name} ${place.category} ${place.tags.join(' ')}`.toLowerCase();
+        
+            // Verifica se TODAS as palavras da busca estão no texto do local
+            return palavrasBusca.every(palavra => textoLocal.includes(palavra));
+        });
+
+        renderPlaces(filtrados);
+    });
+}
 
 // ===== INICIALIZAR DADOS =====
         document.addEventListener('DOMContentLoaded', async () => {
