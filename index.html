@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QualVai | Descubra Vila Velha e Região</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Google Places API -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBuYouNeedToAddYourKeyHere&libraries=places&callback=initMap" async defer></script>
+    
+    <style>
+        /* ===== SISTEMA DE CORES PREMIUM ===== */
+        :root {
+            --primary: #FF4D17;
+            --primary-dark: #E03D0F;
+            --primary-light: #FF6B3D;
+            --navy: #1A0B2E;
+            --navy-light: #2D1B4E;
+            --accent: #FFB800;
+            --bg-light: #FFFFFF;
+            --bg-gray: #F8F9FA;
+            --bg-dark: #F5F6F8;
+            --text-primary: #2D2A3D;
+            --text-secondary: #6B6878;
+            --text-muted: #9B98A8;
+            --border: #E8E7ED;
+            --border-light: #F0EFF5;
+            --success: #10B981;
+            --status-open: #10B981;
+            --status-closed: #EF4444;
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+            --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
+            --shadow-lg: 0 8px 32px rgba(0,0,0,0.12);
+            --shadow-xl: 0 12px 48px rgba(0,0,0,0.16);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+
+        body { 
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--text-primary);
+            background: var(--bg-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ===== HEADER ===== */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 5%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-light);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        header.scrolled { padding: 16px 5%; box-shadow: var(--shadow-md); }
+
+        .logo-container { 
+            display: flex; 
+            align-items: center; 
+            gap: 12px; 
+            text-decoration: none; 
+            transition: transform 0.3s ease;
+        }
+
+        .logo-container:hover { transform: scale(1.02); }
+
+        .logo-icon {
+            width: 45px;
+            height: 45px;
+        }
+
+        .logo-text { 
+            font-family: 'Poppins', sans-serif; 
+            font-size: 28px; 
+            font-weight: 800; 
+            letter-spacing: -1.2px;
+        }
+
+        .logo-text .qual { 
+            background: linear-gradient(135deg, #3B9DD9 0%, #FF6B35 100%); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+            background-clip: text;
+        }
+
+        .logo-text .vai { color: var(--navy); }
+
+        .search-container { flex: 1; max-width: 580px; margin: 0 40px; position: relative; }
+        
+        .search-bar { 
+            display: flex; 
+            align-items: center; 
+            background: var(--bg-gray); 
+            border: 2px solid var(--border); 
+            padding: 14px 24px; 
+            border-radius: 60px; 
+            transition: all 0.3s ease;
+        }
+
+        .search-bar:focus-within {
+            background: white;
+            border-color: var(--primary);
+            box-shadow: 0 4px 20px rgba(255, 77, 23, 0.15);
+        }
+
+        .search-icon {
+            width: 20px;
+            height: 20px;
+            margin-right: 12px;
+            opacity: 0.5;
+        }
+
+        .search-bar input { 
+            border: none; 
+            background: transparent; 
+            width: 100%; 
+            outline: none; 
+            font-size: 15px; 
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .search-bar input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .nav-links { display: flex; align-items: center; gap: 8px; }
+        
+        .nav-links a { 
+            text-decoration: none; 
+            color: var(--text-secondary); 
+            padding: 10px 20px; 
+            font-weight: 600; 
+            font-size: 14px; 
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+            background: var(--bg-gray);
+        }
+
+        .btn-primary { 
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white !important; 
+            padding: 12px 28px !important;
+            box-shadow: 0 4px 16px rgba(255, 77, 23, 0.25);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(255, 77, 23, 0.35);
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            height: 70vh;
+            min-height: 600px;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            overflow: hidden;
+        }
+
+        #bgVideo {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -1;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+            filter: brightness(0.7);
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(26, 11, 46, 0.7) 0%, rgba(255, 77, 23, 0.3) 100%);
+            z-index: 0;
+        }
+
+        .hero-content { 
+            position: relative; 
+            z-index: 1; 
+            padding: 0 20px; 
+            max-width: 900px;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 { 
+            font-family: 'Poppins', sans-serif; 
+            font-size: clamp(42px, 6vw, 72px); 
+            font-weight: 800;
+            margin-bottom: 20px; 
+            letter-spacing: -2px;
+            text-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        .hero p {
+            font-size: clamp(18px, 2vw, 26px);
+            opacity: 0.95;
+            margin-bottom: 40px;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        /* ===== CATEGORIAS ===== */
+        .categories-nav {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-top: -40px;
+            position: relative;
+            z-index: 10;
+            flex-wrap: wrap;
+            padding: 0 5%;
+        }
+
+        .cat-btn {
+            background: white;
+            border: 2px solid var(--border-light);
+            padding: 16px 32px;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 700;
+            color: var(--navy);
+            box-shadow: var(--shadow-lg);
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .cat-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-5px);
+        }
+
+        .cat-btn.active {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* ===== MAIN ===== */
+        .main-content { 
+            padding: 80px 5% 100px; 
+            max-width: 1400px; 
+            margin: 0 auto; 
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 36px;
+            font-weight: 800;
+            color: var(--navy);
+            letter-spacing: -1px;
+        }
+
+        /* ===== GRID ===== */
+        .grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); 
+            gap: 32px; 
+        }
+
+        /* ===== CARDS ===== */
+        .card { 
+            background: white; 
+            border-radius: 16px; 
+            overflow: hidden; 
+            border: 1px solid var(--border-light); 
+            transition: all 0.4s ease;
+            text-decoration: none; 
+            color: inherit;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .card.hidden { display: none; }
+
+        .card:hover { 
+            transform: translateY(-8px); 
+            box-shadow: var(--shadow-xl); 
+        }
+
+        .card-img-container {
+            width: 100%;
+            aspect-ratio: 16/10;
+            overflow: hidden;
+            position: relative;
+            background: var(--bg-dark);
+        }
+
+        .card-img { 
+            width: 100%; 
+            height: 100%;
+            object-fit: cover; 
+            transition: transform 0.6s ease;
+        }
+
+        .card:hover .card-img { 
+            transform: scale(1.1); 
+        }
+
+        .card-badge {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--primary);
+            z-index: 2;
+        }
+
+        .card-badge.featured {
+            background: linear-gradient(135deg, var(--accent) 0%, #FFD93D 100%);
+            color: var(--navy);
+        }
+
+        .card-category {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            background: rgba(26, 11, 46, 0.85);
+            backdrop-filter: blur(8px);
+            color: white;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            z-index: 2;
+        }
+
+        .card-body { padding: 20px; }
+
+        .card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 8px;
+        }
+
+        .card-title { 
+            font-weight: 700; 
+            font-size: 20px; 
+            color: var(--navy); 
+            margin-bottom: 6px;
+            line-height: 1.3;
+            flex: 1;
+        }
+
+        .card-rating {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            background: var(--bg-gray);
+            padding: 4px 10px;
+            border-radius: 20px;
+            flex-shrink: 0;
+        }
+
+        .star {
+            color: var(--accent);
+            font-size: 14px;
+        }
+
+        .rating-value {
+            font-weight: 700;
+            font-size: 13px;
+            color: var(--text-primary);
+        }
+
+        .rating-loading {
+            width: 12px;
+            height: 12px;
+            border: 2px solid var(--border);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .card-location {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .card-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-top: 4px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        .status-open .status-dot {
+            background: var(--status-open);
+        }
+
+        .status-closed .status-dot {
+            background: var(--status-closed);
+        }
+
+        .status-open {
+            color: var(--status-open);
+        }
+
+        .status-closed {
+            color: var(--status-closed);
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 12px;
+            border-top: 1px solid var(--border-light);
+        }
+
+        .card-price {
+            font-weight: 700;
+            font-size: 16px;
+            color: var(--primary);
+        }
+
+        .card-info-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .tag { 
+            font-size: 12px;
+            color: var(--text-muted);
+            background: var(--bg-gray);
+            padding: 4px 10px;
+            border-radius: 6px;
+        }
+
+        .delivery-tag {
+            background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+            color: white;
+            font-weight: 600;
+        }
+
+        .kids-tag {
+            background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+            color: white;
+            font-weight: 600;
+        }
+
+        /* ===== LOADING ===== */
+        .loading { 
+            text-align: center; 
+            padding: 100px 20px; 
+        }
+
+        .spinner { 
+            width: 50px; 
+            height: 50px; 
+            border: 4px solid var(--border); 
+            border-top-color: var(--primary); 
+            border-radius: 50%; 
+            animation: spin 0.8s linear infinite; 
+            margin: 0 auto 20px;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: var(--navy);
+            color: white;
+            padding: 60px 5% 30px;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .footer-content h3 {
+            font-size: 24px;
+            margin-bottom: 16px;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 30px;
+            margin-top: 30px;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 14px;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            header { padding: 16px 5%; }
+            .search-container { display: none; }
+            .nav-links a:not(.btn-primary) { display: none; }
+            .hero { height: 60vh; min-height: 500px; }
+            .categories-nav { gap: 10px; margin-top: -30px; }
+            .cat-btn { padding: 12px 20px; font-size: 13px; }
+            .grid { grid-template-columns: 1fr; gap: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== HEADER ===== -->
+    <header id="main-header">
+        <a href="index.html" class="logo-container">
+            <img src="logo-qualvai.png" alt="QualVai Logo" class="logo-icon" onerror="this.style.display='none'">
+            <div class="logo-text">
+                <span class="qual">Qual</span><span class="vai">Vai</span>
+            </div>
+        </a>
+
+        <div class="search-container">
+            <div class="search-bar">
+                <svg class="search-icon" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"/>
+                </svg>
+                <input type="text" id="searchInput" placeholder="O que você procura em Vila Velha?">
+            </div>
+        </div>
+
+        <nav class="nav-links">
+            <a href="pesquisa.html">Pesquisa Avançada</a>
+            <a href="#anunciar" class="btn-primary">Anunciar</a>
+        </nav>
+    </header>
+
+    <!-- ===== HERO ===== -->
+    <section class="hero">
+        <video autoplay muted loop playsinline id="bgVideo">
+            <source src="ES.mp4" type="video/mp4">
+        </video>
+        
+        <div class="hero-overlay"></div>
+
+        <div class="hero-content">
+            <h1>Viva o melhor do ES</h1>
+            <p>Os melhores lugares com dados atualizados em tempo real</p>
+        </div>
+    </section>
+
+    <!-- ===== CATEGORIAS ===== -->
+    <div class="categories-nav">
+        <button class="cat-btn active" data-category="todos">
+            <span>✨</span> Todos
+        </button>
+        <button class="cat-btn" data-category="restaurante">
+            <span>🍴</span> Restaurantes
+        </button>
+        <button class="cat-btn" data-category="bar">
+            <span>🍻</span> Bares
+        </button>
+        <button class="cat-btn" data-category="cafe">
+            <span>☕</span> Cafés
+        </button>
+        <button class="cat-btn" data-category="cultura">
+            <span>🎭</span> Cultura
+        </button>
+        <button class="cat-btn" data-category="natureza">
+            <span>🌳</span> Natureza
+        </button>
+    </div>
+
+    <!-- ===== MAIN ===== -->
+    <main class="main-content">
+        <div class="section-header">
+            <h2 class="section-title">Em destaque</h2>
+        </div>
+
+        <!-- Loading -->
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Carregando dados da planilha...</p>
+        </div>
+
+        <!-- Grid -->
+        <div class="grid" id="placesGrid" style="display: none;">
+            <!-- Cards serão inseridos aqui -->
+        </div>
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer>
+        <div class="footer-content">
+            <h3>QualVai</h3>
+            <p style="color: rgba(255,255,255,0.7); font-size: 14px; max-width: 600px; margin: 0 auto;">
+                Descubra os melhores lugares de Vila Velha e região com dados atualizados em tempo real.
+            </p>
+        </div>
+        <div class="footer-bottom">
+            © 2026 QualVai. Dados via Google Sheets + Google Places API. Feito com ❤️ no Espírito Santo.
+        </div>
+    </footer>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+        // ===== CONFIGURAÇÃO =====
+        const SHEET_ID = '1tKwZvr27lHo2iV2rR6yxiPqxGgbP517auUOBib1DBcI';
+        const SHEET_NAME = 'lugares';
+
+        let placesData = [];
+        let currentCategory = 'todos';
+        let placesService = null;
+
+        // ===== INICIALIZAR GOOGLE PLACES =====
+        function initMap() {
+            // Criar serviço do Google Places
+            const dummyDiv = document.createElement('div');
+            placesService = new google.maps.places.PlacesService(dummyDiv);
+            console.log('✅ Google Places API inicializada');
+        }
+
+        // ===== BUSCAR DETALHES DO GOOGLE PLACES =====
+        function fetchGooglePlacesDetails(place, cardElement) {
+            if (!place.placeId || !placesService) {
+                console.log(`⏭️ ${place.name}: Sem PlaceID ou serviço não inicializado`);
+                return;
+            }
+
+            placesService.getDetails({
+                placeId: place.placeId,
+                fields: ['rating', 'user_ratings_total', 'opening_hours']
+            }, (result, status) => {
+                if (status === google.maps.places.PlacesServiceStatus.OK) {
+                    console.log(`✅ ${place.name}: Dados do Google Places recebidos`, result);
+
+                    // Atualizar rating
+                    if (result.rating) {
+                        const ratingEl = cardElement.querySelector('.rating-value');
+                        if (ratingEl) {
+                            const totalRatings = result.user_ratings_total || 0;
+                            ratingEl.innerHTML = `${result.rating} <span style="font-size:11px;color:var(--text-muted)">(${totalRatings})</span>`;
+                        }
+                    }
+
+                    // Atualizar status (aberto/fechado)
+                    if (result.opening_hours) {
+                        const isOpen = result.opening_hours.isOpen();
+                        const statusEl = cardElement.querySelector('.card-status');
+                        
+                        if (statusEl) {
+                            statusEl.className = `card-status ${isOpen ? 'status-open' : 'status-closed'}`;
+                            statusEl.innerHTML = `
+                                <span class="status-dot"></span>
+                                ${isOpen ? 'Aberto agora' : 'Fechado'}
+                            `;
+                        }
+                    }
+                } else {
+                    console.warn(`⚠️ ${place.name}: Erro ao buscar do Google Places:`, status);
+                }
+            });
+        }
+
+        // ===== FUNÇÃO CALLBACK PARA JSONP =====
+        function handleSheetData(data) {
+            console.log('✅ Dados recebidos via JSONP!');
+            
+            try {
+                const rows = data.table.rows;
+                placesData = [];
+
+                console.log(`📊 Total de linhas na planilha: ${rows.length}`);
+
+                rows.forEach((row, index) => {
+                    const c = row.c;
+                    
+                    // LOG DETALHADO para debug
+                    console.log(`Linha ${index}:`, c);
+                    
+                    // CONDIÇÃO MENOS RESTRITIVA - só pula se TODAS as células forem null
+                    const allNull = !c || c.every(cell => !cell || !cell.v);
+                    if (allNull) {
+                        console.log(`⏭️ Pulando linha ${index} (toda vazia)`);
+                        return;
+                    }
+
+                    // Pegar nome (coluna A)
+                    const name = c[0]?.v || '';
+                    
+                    // Se não tem nome, pular (provavelmente cabeçalho ou linha vazia)
+                    if (!name || name.toLowerCase() === 'nome') {
+                        console.log(`⏭️ Pulando linha ${index} (sem nome ou é cabeçalho)`);
+                        return;
+                    }
+
+                    const place = {
+                        id: index,
+                        name: name,                                                    // A
+                        category: (c[1]?.v || 'outros').toLowerCase(),                 // B
+                        image: c[2]?.v || 'https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=400', // C
+                        location: c[3]?.v || '',                                       // D
+                        distance: c[4]?.v || '',                                       // E
+                        price: c[5]?.v || '',                                          // F
+                        tags: c[6]?.v ? c[6].v.split(',').map(t => t.trim()) : [],    // G
+                        featured: (c[7]?.v || '').toLowerCase() === 'sim',             // H
+                        placeId: c[8]?.v || null,                                      // I
+                        rating: parseFloat(c[9]?.v || c[9]?.f || 0),                  // J - Rating do Google
+                        status: c[10]?.v || 'Aberto',                                  // K
+                        delivery: (c[11]?.v || '').toLowerCase() === 'sim',            // L
+                        payment: c[12]?.v || '',                                       // M
+                        ratingQV: parseFloat(c[13]?.v || c[13]?.f || 0),              // N - Rating QV (NOVO)
+                        areaKids: (c[14]?.v || '').toLowerCase() === 'sim'             // O - Área Kids (NOVO)
+                    };
+
+                    console.log(`✅ Linha ${index} adicionada:`, place.name);
+                    placesData.push(place);
+                });
+
+                console.log(`✅ ${placesData.length} lugares carregados com sucesso!`);
+                console.log('📦 Amostra completa:', placesData);
+
+                // Salvar no cache
+                localStorage.setItem('qualvai_cache', JSON.stringify({
+                    data: placesData,
+                    timestamp: Date.now()
+                }));
+
+                // ORDENAR: Destaques primeiro!
+                placesData.sort((a, b) => {
+                    if (a.featured && !b.featured) return -1;
+                    if (!a.featured && b.featured) return 1;
+                    return 0;
+                });
+
+                renderPlaces(placesData);
+
+            } catch (error) {
+                console.error('❌ Erro ao processar dados:', error);
+                tryLoadFromCache();
+            }
+        }
+
+        // ===== BUSCAR DADOS VIA JSONP =====
+        function fetchPlacesFromSheet() {
+            console.log('🔄 Buscando dados via JSONP...');
+
+            const script = document.createElement('script');
+            script.src = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=responseHandler:handleSheetData&sheet=${SHEET_NAME}`;
+            
+            script.onerror = function() {
+                console.error('❌ Erro ao carregar script do Google Sheets');
+                tryLoadFromCache();
+            };
+
+            document.head.appendChild(script);
+        }
+
+        // ===== TENTAR CARREGAR DO CACHE =====
+        function tryLoadFromCache() {
+            const cache = localStorage.getItem('qualvai_cache');
+            
+            if (cache) {
+                const cached = JSON.parse(cache);
+                const cacheAge = Date.now() - cached.timestamp;
+                
+                if (cacheAge < 3600000) {
+                    console.log('📦 Usando dados do cache');
+                    placesData = cached.data;
+                    renderPlaces(placesData);
+                    return true;
+                }
+            }
+            
+            const loading = document.getElementById('loading');
+            loading.innerHTML = `
+                <div style="color: var(--primary);">
+                    <p style="font-size: 24px; margin-bottom: 16px;">⚠️ Erro ao carregar dados</p>
+                    <p style="color: var(--text-secondary);">Verifique se:</p>
+                    <ul style="text-align: left; max-width: 400px; margin: 20px auto; color: var(--text-secondary);">
+                        <li>A planilha está compartilhada como "Qualquer pessoa com o link"</li>
+                        <li>O modo está como "Leitor"</li>
+                        <li>A aba se chama "lugares"</li>
+                        <li>Sua conexão com a internet está funcionando</li>
+                    </ul>
+                    <button onclick="location.reload()" style="
+                        background: var(--primary);
+                        color: white;
+                        border: none;
+                        padding: 12px 32px;
+                        border-radius: 8px;
+                        font-weight: 600;
+                        cursor: pointer;
+                        margin-top: 20px;
+                    ">Tentar Novamente</button>
+                </div>
+            `;
+            
+            return false;
+        }
+
+        // ===== CATEGORIA NOME =====
+        function getCategoryName(category) {
+            const names = {
+                'restaurante': 'Restaurante',
+                'bar': 'Bar',
+                'cafe': 'Café',
+                'cultura': 'Cultura',
+                'natureza': 'Natureza',
+                'compras': 'Compras'
+            };
+            return names[category] || category;
+        }
+
+        // ===== RENDERIZAR PLACES =====
+        function renderPlaces(placesToRender = placesData) {
+            const grid = document.getElementById('placesGrid');
+            const loading = document.getElementById('loading');
+
+            grid.innerHTML = '';
+
+            if (placesToRender.length === 0) {
+                grid.innerHTML = '<p style="text-align:center; grid-column: 1/-1; color: var(--text-muted);">Nenhum lugar encontrado</p>';
+                loading.style.display = 'none';
+                grid.style.display = 'grid';
+                return;
+            }
+
+            placesToRender.forEach(place => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.dataset.id = place.id;
+
+                // Definir qual rating usar (priorizar Rating QV se existir)
+                const displayRating = place.ratingQV > 0 ? place.ratingQV : place.rating;
+                const ratingSource = place.ratingQV > 0 ? 'QV' : (place.placeId ? 'Google' : '');
+
+                // Status
+                const isOpen = place.status.toLowerCase() === 'aberto';
+                const statusHtml = `
+                    <div class="card-status ${isOpen ? 'status-open' : 'status-closed'}">
+                        <span class="status-dot"></span>
+                        ${isOpen ? 'Aberto agora' : 'Fechado'}
+                    </div>
+                `;
+
+                // Badge de Delivery
+                let deliveryBadge = '';
+                if (place.delivery) {
+                    deliveryBadge = `<span class="tag delivery-tag">🛵 Delivery</span>`;
+                }
+
+                // Badge de Área Kids (NOVO)
+                let kidsBadge = '';
+                if (place.areaKids) {
+                    kidsBadge = `<span class="tag kids-tag">👶 Área Kids</span>`;
+                }
+
+                // Ícones de pagamento
+                let paymentIcons = '';
+                if (place.payment) {
+                    const payments = place.payment.toLowerCase();
+                    const icons = [];
+                    
+                    if (payments.includes('dinheiro')) icons.push('💵');
+                    if (payments.includes('cartão') || payments.includes('cartao')) icons.push('💳');
+                    if (payments.includes('pix')) icons.push('📱');
+                    if (payments.includes('voucher')) icons.push('🎫');
+                    if (payments.includes('ifood')) icons.push('🍔');
+                    if (payments.includes('rappi')) icons.push('🛒');
+                    
+                    if (icons.length > 0) {
+                        paymentIcons = `
+                            <div style="display: flex; gap: 4px; margin-top: 8px;">
+                                ${icons.map(icon => `<span style="font-size: 16px;">${icon}</span>`).join('')}
+                            </div>
+                        `;
+                    }
+                }
+
+                card.innerHTML = `
+                    <div class="card-img-container">
+                        <span class="card-category">${getCategoryName(place.category)}</span>
+                        ${place.featured ? '<span class="card-badge featured">⭐ Destaque</span>' : ''}
+                        <img src="${place.image}" class="card-img" alt="${place.name}" onerror="this.src='https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=400'">
+                    </div>
+                    <div class="card-body">
+                        <div class="card-top">
+                            <h3 class="card-title">${place.name}</h3>
+                            ${displayRating > 0 ? `
+                            <div class="card-rating" data-place-id="${place.placeId || ''}">
+                                <span class="star">★</span>
+                                <span class="rating-value">${displayRating.toFixed(1)}${ratingSource ? ' (' + ratingSource + ')' : ''}</span>
+                            </div>
+                            ` : ''}
+                        </div>
+                        <div class="card-location">
+                            <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor">
+                                <path d="M7 0C4.24 0 2 2.24 2 5c0 3.5 5 9 5 9s5-5.5 5-9c0-2.76-2.24-5-5-5zm0 7a2 2 0 110-4 2 2 0 010 4z"/>
+                            </svg>
+                            ${place.location}${place.distance ? ' · ' + place.distance : ''}
+                        </div>
+                        ${statusHtml}
+                        ${paymentIcons}
+                        <div class="card-footer">
+                            <div class="card-info-tags">
+                                ${deliveryBadge}
+                                ${kidsBadge}
+                                ${place.tags.filter(t => t).map(tag => `<span class="tag">${tag}</span>`).join('')}
+                            </div>
+                            ${place.price ? `<span class="card-price">${place.price}</span>` : ''}
+                        </div>
+                    </div>
+                `;
+
+                grid.appendChild(card);
+
+                // Buscar dados do Google Places (se tiver PlaceID)
+                if (place.placeId && placesService) {
+                    fetchGooglePlacesDetails(place, card);
+                }
+            });
+
+            loading.style.display = 'none';
+            grid.style.display = 'grid';
+        }
+
+        // ===== FILTRAR POR CATEGORIA =====
+        function filterByCategory(category) {
+            currentCategory = category;
+
+            let filtered = placesData;
+            if (category !== 'todos') {
+                filtered = placesData.filter(p => p.category === category);
+            }
+
+            // SEMPRE ordenar: destaques primeiro
+            filtered.sort((a, b) => {
+                if (a.featured && !b.featured) return -1;
+                if (!a.featured && b.featured) return 1;
+                return 0;
+            });
+
+            renderPlaces(filtered);
+        }
+
+        // ===== EVENT LISTENERS =====
+
+        // Categorias
+        document.querySelectorAll('.cat-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+
+                const category = this.dataset.category;
+                filterByCategory(category);
+            });
+        });
+
+        // Header scroll
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('main-header');
+            if (window.pageYOffset > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Vídeo
+        const video = document.getElementById('bgVideo');
+        if (video) {
+            const startTime = 80;
+            const endTime = 95;
+
+            video.addEventListener('timeupdate', function() {
+                if (this.currentTime >= endTime) {
+                    this.currentTime = startTime;
+                    this.play();
+                }
+            });
+
+            video.addEventListener('loadedmetadata', function() {
+                this.currentTime = startTime;
+            });
+        }
+
+        // ===== INICIALIZAR =====
+        document.addEventListener('DOMContentLoaded', () => {
+            // Verificar cache primeiro
+            const cache = localStorage.getItem('qualvai_cache');
+            if (cache) {
+                const cached = JSON.parse(cache);
+                const cacheAge = Date.now() - cached.timestamp;
+
+                if (cacheAge < 3600000) {
+                    console.log('📦 Usando cache (válido por mais ' + Math.round((3600000 - cacheAge) / 60000) + ' minutos)');
+                    placesData = cached.data;
+                    renderPlaces();
+                    return;
+                }
+            }
+
+            // Buscar dados novos
+            fetchPlacesFromSheet();
+        });
+    </script>
+
+</body>
+</html>
