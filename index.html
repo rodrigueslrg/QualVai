@@ -1046,37 +1046,45 @@
             });
         }
 
-        // ===== INICIALIZAR =====
-        document.addEventListener('DOMContentLoaded', () => {
-            // Verificar cache primeiro
+// ===== INICIALIZAR DADOS =====
+        document.addEventListener('DOMContentLoaded', async () => {
             const cache = localStorage.getItem('qualvai_cache');
             if (cache) {
                 const cached = JSON.parse(cache);
                 const cacheAge = Date.now() - cached.timestamp;
-
-                if (cacheAge < 3600000) {
-                    console.log('📦 Usando cache (válido por mais ' + Math.round((3600000 - cacheAge) / 60000) + ' minutos)');
+                
+                if (cacheAge < 3600000) { 
+                    console.log('📦 Usando cache...');
                     placesData = cached.data;
                     renderPlaces();
-                    return;
+                } else {
+                    await fetchPlacesFromSheet();
+                    renderPlaces();
                 }
+            } else {
+                await fetchPlacesFromSheet();
+                renderPlaces();
             }
-
-            // Buscar dados novos
-            fetchPlacesFromSheet();
         });
-<script type="module">
-    import { pipeline } from 'https://cdn.jsdelivr.net/npm/@xenova/transformers';
+    </script> <script type="module">
+        import { pipeline } from 'https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.1';
 
-    // Isso inicializa a IA em segundo plano
-    async function inicializarIA() {
-        console.log("🧠 Carregando cérebro local...");
-        // Usamos um modelo leve de classificação ou busca semântica
-        const classifier = await pipeline('feature-extraction', 'Xenova/all-MiniLM-L6-v2');
-        return classifier;
-    }
-</script>
+        // Variável global para usar a IA em outras funções depois
+        let buscadorInteligente;
+
+        async function inicializarIA() {
+            try {
+                console.log("🧠 Carregando cérebro local (Transformers.js)...");
+                // Modelo leve para busca semântica
+                buscadorInteligente = await pipeline('feature-extraction', 'Xenova/all-MiniLM-L6-v2');
+                console.log("✅ IA Pronta para uso offline!");
+            } catch (e) {
+                console.error("❌ Erro ao carregar IA:", e);
+            }
+        }
+
+        // Inicia o carregamento da IA sem travar o resto do site
+        inicializarIA();
     </script>
-
 </body>
 </html>
