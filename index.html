@@ -1047,26 +1047,32 @@
     // ===== LÓGICA DE PESQUISA MELHORADA =====
         const searchInput = document.getElementById('searchInput');
 
-        searchInput.addEventListener('input', (e) => {
-        const termoCompleto = e.target.value.toLowerCase().trim();
+        searchInput.addEventListener('input', async (e) => {
+            let termo = e.target.value.toLowerCase().trim();
     
-        if (termoCompleto.length === 0) {
-            renderPlaces(placesData);
-            return;
-        }
+            if (termo.length === 0) {
+                renderPlaces(placesData);
+                return;
+            }
 
-        // Divide a busca em palavras (ex: "pizza" e "italiana")
-        const palavrasBusca = termoCompleto.split(/\s+/);
+            // 1. Limpeza: remove palavras como "de", "do", "com", "para"
+            const ruidos = ["de", "do", "da", "com", "para", "em", "um", "uma"];
+            const palavrasBusca = termo.split(/\s+/).filter(p => !ruidos.includes(p));
 
-        const filtrados = placesData.filter(place => {
-            const textoLocal = `${place.name} ${place.category} ${place.tags.join(' ')}`.toLowerCase();
+            // 2. Busca Flexível (Tenta achar parte das palavras)
+            const filtrados = placesData.filter(place => {
+                const textoLocal = `${place.name} ${place.category} ${place.tags.join(' ')}`.toLowerCase();
         
-            // Verifica se TODAS as palavras da busca estão no texto do local
-            return palavrasBusca.every(palavra => textoLocal.includes(palavra));
-        });
+                // Se o local tiver pelo menos uma das palavras importantes da busca, ele aparece
+                return palavrasBusca.some(palavra => {
+                // Remove o final das palavras (ex: italiano/italiana vira "italian")
+                    const radical = palavra.length > 4 ? palavra.substring(0, palavra.length - 1) : palavra;
+                    return textoLocal.includes(radical);
+                });
+            });
 
-        renderPlaces(filtrados);
-    });
+            renderPlaces(filtrados);
+        });
 }
 
 // ===== INICIALIZAR DADOS =====
@@ -1089,24 +1095,52 @@
                 renderPlaces();
             }
         });
-    </script> <script type="module">
-        import { pipeline } from 'https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.1';
+    <script type="module">
+        import { pipeline, cos_sim } from 'https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.1';
 
-        // Variável global para usar a IA em outras funções depois
-        let buscadorInteligente;
+        let extrator;
+        let baseConhecimentoIA = [];
 
         async function inicializarIA() {
-            try {
-                console.log("🧠 Carregando cérebro local (Transformers.js)...");
-                // Modelo leve para busca semântica
-                buscadorInteligente = await pipeline('feature-extraction', 'Xenova/all-MiniLM-L6-v2');
-                console.log("✅ IA Pronta para uso offline!");
-            } catch (e) {
-                console.error("❌ Erro ao carregar IA:", e);
-            }
+            console.log("🧠 IA: Preparando cérebro local...");
+            extrator = await pipeline('feature-extraction', 'Xenova/all-MiniLM-L6-v2');
+            console.log("✅ IA: Pronta!");
+        
+            // Gerar o mapa de conhecimento da sua planilha
+            await gerarMapaMental();
         }
 
-        // Inicia o carregamento da IA sem travar o resto do site
+        async function gerarMapaMental() {
+            if (!placesData.length) return setTimeout(gerarMapaMental, 1000);
+        
+            console.log("📚 IA: Analisando seus locais...");
+            for (const local of placesData) {
+                const textoParaIA = `${local.category} ${local.tags.join(' ')} ${local.name}`;
+                const output = await extrator(textoParaIA, { pooling: 'mean', normalize: true });
+                baseConhecimentoIA.push({ ...local, vetor: output });
+            }
+            console.log("🚀 IA: Conhecimento concluído!");
+        }
+
+        // ESSA FUNÇÃO FAZ A MÁGICA
+        window.buscaInteligente = async function(pergunta) {
+            if (!extrator || !baseConhecimentoIA.length) return;
+
+            const vetorPergunta = await extrator(pergunta, { pooling: 'mean', normalize: true });
+        
+            const resultados = baseConhecimentoIA.map(local => {
+                const similaridade = cos_sim(vetorPergunta.data, local.vetor.data);
+                return { ...local, score: similaridade };
+            });
+
+            // Filtra só o que tem sentido (score > 0.15) e ordena
+            const sugeridos = resultados
+                .filter(r => r.score > 0.15)
+                .sort((a, b) => b.score - a.score);
+
+            renderPlaces(sugeridos);
+        }
+
         inicializarIA();
     </script>
 </body>
