@@ -1065,6 +1065,17 @@
             // Buscar dados novos
             fetchPlacesFromSheet();
         });
+<script type="module">
+    import { pipeline } from 'https://cdn.jsdelivr.net/npm/@xenova/transformers';
+
+    // Isso inicializa a IA em segundo plano
+    async function inicializarIA() {
+        console.log("🧠 Carregando cérebro local...");
+        // Usamos um modelo leve de classificação ou busca semântica
+        const classifier = await pipeline('feature-extraction', 'Xenova/all-MiniLM-L6-v2');
+        return classifier;
+    }
+</script>
     </script>
 
 </body>
