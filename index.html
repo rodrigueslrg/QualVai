@@ -730,7 +730,7 @@
         const SHEET_ID = '1tKwZvr27lHo2iV2rR6yxiPqxGgbP517auUOBib1DBcI';
         const SHEET_NAME = 'lugares';
 
-        let placesData = [];
+        window.placesData = [];
         let currentCategory = 'todos';
         let googlePlacesService = null;
         let searchDebounceTimer = null;
@@ -810,7 +810,7 @@
             
             try {
                 const rows = data.table.rows;
-                placesData = [];
+                window.placesData = [];
 
                 console.log(`📊 Total de linhas recebidas: ${rows.length}`);
 
@@ -842,14 +842,14 @@
                         areaKids: (c[14]?.v || c[14]?.f || '').toLowerCase() === 'sim'
                     };
 
-                    placesData.push(place);
+                    window.placesData.push(place);
                     console.log(`✅ Linha ${index + 1}: ${place.name}`);
                 });
 
                 console.log(`✅ ${placesData.length} lugares carregados!`);
 
                 // Ordenar: Destaques primeiro
-                placesData.sort((a, b) => {
+                window.placesData.sort((a, b) => {
                     if (a.featured && !b.featured) return -1;
                     if (!a.featured && b.featured) return 1;
                     return 0;
@@ -860,7 +860,7 @@
                     timestamp: Date.now()
                 }));
 
-                renderPlaces(placesData);
+                window.renderPlaces(window.placesData);
 
                 if (googlePlacesService) {
                     updatePlacesWithGoogleData();
@@ -898,7 +898,7 @@
                 if (cacheAge < 3600000) {
                     console.log('📦 Usando dados do cache');
                     placesData = cached.data;
-                    renderPlaces(placesData);
+                    window.renderPlaces(window.placesData);
                     return true;
                 }
             }
@@ -938,7 +938,7 @@
         }
 
         // ===== RENDERIZAR PLACES =====
-        function renderPlaces(placesToRender = placesData) {
+        window.renderPlaces = function(placesToRender = window.placesData) {
             const grid = document.getElementById('placesGrid');
             const loading = document.getElementById('loading');
 
@@ -1067,7 +1067,7 @@
             
             if (termo.length === 0) {
                 iaBadge.classList.remove('active');
-                renderPlaces(placesData);
+                window.renderPlaces(window.placesData);
                 return;
             }
 
@@ -1085,7 +1085,7 @@
                     const ruidos = ["de", "do", "da", "com", "para", "em", "um", "uma"];
                     const palavrasBusca = termo.split(/\s+/).filter(p => !ruidos.includes(p));
                     
-                    const filtrados = placesData.filter(place => {
+                    const filtrados = window.placesData.filter(place => {
                         const textoLocal = `${place.name} ${place.category} ${place.tags.join(' ')}`.toLowerCase();
                         
                         return palavrasBusca.some(palavra => {
@@ -1106,10 +1106,10 @@
             searchInput.value = '';
 
             if (category === 'todos') {
-                renderPlaces(placesData);
+                window.renderPlaces(window.placesData);
             } else {
-                const filtered = placesData.filter(p => p.category === category);
-                renderPlaces(filtered);
+                const filtered = window.placesData.filter(p => p.category === category);
+                window.renderPlaces(filtered);
             }
         }
 
@@ -1158,7 +1158,7 @@
                 if (cacheAge < 3600000) {
                     console.log('📦 Usando cache');
                     placesData = cached.data;
-                    renderPlaces();
+                    window.renderPlaces();
                     return;
                 }
             }
