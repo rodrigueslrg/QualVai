@@ -9,50 +9,43 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
     
+    <script>
+        function initMap() {
+            console.log('✅ Google Places API carregada!');
+            if (window.onGooglePlacesReady) {
+                window.onGooglePlacesReady();
+            }
+        }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBqWHhpaździCKgB7vK3W_tZNNgQxOEYrQs&libraries=places&callback=initMap" async defer></script>
+    
     <style>
-        /* ===== SISTEMA DE CORES PREMIUM ===== */
         :root {
             --primary: #FF4D17;
             --primary-dark: #E03D0F;
             --primary-light: #FF6B3D;
             --navy: #1A0B2E;
-            --navy-light: #2D1B4E;
             --accent: #FFB800;
             --bg-light: #FFFFFF;
             --bg-gray: #F8F9FA;
-            --bg-dark: #F5F6F8;
             --text-primary: #2D2A3D;
             --text-secondary: #6B6878;
             --text-muted: #9B98A8;
             --border: #E8E7ED;
             --border-light: #F0EFF5;
-            --success: #10B981;
+            --status-open: #10B981;
+            --status-closed: #EF4444;
             --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
             --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
             --shadow-lg: 0 8px 32px rgba(0,0,0,0.12);
             --shadow-xl: 0 12px 48px rgba(0,0,0,0.16);
         }
 
-        * { 
-            margin: 0; 
-            padding: 0; 
-            box-sizing: border-box; 
-        }
-        
-        html {
-            scroll-behavior: smooth;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+        body { font-family: 'Inter', sans-serif; color: var(--text-primary); background: var(--bg-light); line-height: 1.6; }
 
-        body { 
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            color: var(--text-primary);
-            background: var(--bg-light);
-            line-height: 1.6;
-        }
-
-        /* ===== HEADER ===== */
+        /* HEADER */
         header {
             display: flex;
             justify-content: space-between;
@@ -75,14 +68,9 @@
             transition: transform 0.3s ease;
         }
 
-        .logo-container:hover {
-            transform: scale(1.02);
-        }
+        .logo-container:hover { transform: scale(1.02); }
 
-        .logo-icon {
-            width: 40px;
-            height: 40px;
-        }
+        .logo-icon { width: 45px; height: 45px; }
 
         .logo-text {
             font-family: 'Poppins', sans-serif;
@@ -92,21 +80,15 @@
         }
 
         .logo-text .qual {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            background: linear-gradient(135deg, #3B9DD9 0%, #FF6B35 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
-        .logo-text .vai {
-            color: var(--navy);
-        }
+        .logo-text .vai { color: var(--navy); }
 
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
+        .nav-links { display: flex; align-items: center; gap: 8px; }
 
         .nav-links a {
             text-decoration: none;
@@ -118,10 +100,7 @@
             transition: all 0.3s ease;
         }
 
-        .nav-links a:hover {
-            color: var(--text-primary);
-            background: var(--bg-gray);
-        }
+        .nav-links a:hover { color: var(--text-primary); background: var(--bg-gray); }
 
         .btn-primary {
             background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
@@ -130,100 +109,87 @@
             box-shadow: 0 4px 16px rgba(255, 77, 23, 0.25);
         }
 
-        /* ===== PAGE HEADER ===== */
+        /* PAGE HEADER */
         .page-header {
-            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
-            padding: 60px 5% 40px;
+            background: linear-gradient(135deg, var(--navy) 0%, #2D1B4E 100%);
+            padding: 60px 5% 50px;
             color: white;
             text-align: center;
         }
 
         .page-header h1 {
             font-family: 'Poppins', sans-serif;
-            font-size: 48px;
+            font-size: clamp(36px, 5vw, 52px);
             font-weight: 800;
             margin-bottom: 16px;
-            letter-spacing: -1px;
+            letter-spacing: -1.5px;
         }
 
         .page-header p {
-            font-size: 18px;
+            font-size: 19px;
             opacity: 0.9;
-            max-width: 600px;
+            max-width: 700px;
             margin: 0 auto;
         }
 
-        /* ===== SEARCH SECTION ===== */
-        .search-section {
-            padding: 40px 5%;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .search-main {
-            background: white;
-            border-radius: 16px;
-            padding: 32px;
-            box-shadow: var(--shadow-lg);
-            margin-bottom: 40px;
-        }
-
-        .search-title {
-            font-size: 20px;
-            font-weight: 700;
-            color: var(--navy);
-            margin-bottom: 24px;
+        /* LAYOUT */
+        .search-layout {
             display: flex;
-            align-items: center;
-            gap: 10px;
+            max-width: 1600px;
+            margin: 0 auto;
+            min-height: calc(100vh - 300px);
         }
 
-        .search-main-input {
-            position: relative;
+        /* SIDEBAR */
+        .sidebar {
+            width: 340px;
+            background: white;
+            border-right: 1px solid var(--border-light);
+            position: sticky;
+            top: 89px;
+            height: calc(100vh - 89px);
+            overflow-y: auto;
+            padding: 32px 24px;
+        }
+
+        .sidebar::-webkit-scrollbar { width: 6px; }
+        .sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+        .sidebar-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--navy);
+            margin-bottom: 8px;
+        }
+
+        .sidebar-subtitle {
+            color: var(--text-muted);
+            font-size: 14px;
             margin-bottom: 32px;
         }
 
-        .search-main-input input {
-            width: 100%;
-            padding: 18px 24px;
-            font-size: 16px;
-            border: 2px solid var(--border);
-            border-radius: 12px;
-            outline: none;
-            transition: all 0.3s ease;
-        }
-
-        .search-main-input input:focus {
-            border-color: var(--primary);
-            box-shadow: 0 4px 20px rgba(255, 77, 23, 0.15);
-        }
-
-        /* ===== FILTERS GRID ===== */
-        .filters-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 24px;
+        .filter-section {
             margin-bottom: 32px;
+            padding-bottom: 32px;
+            border-bottom: 1px solid var(--border-light);
         }
 
-        .filter-group {
-            background: var(--bg-gray);
-            padding: 24px;
-            border-radius: 12px;
-            border: 1px solid var(--border-light);
-        }
+        .filter-section:last-child { border-bottom: none; }
 
-        .filter-group-title {
-            font-size: 16px;
+        .filter-title {
+            font-size: 15px;
             font-weight: 700;
             color: var(--navy);
-            margin-bottom: 16px;
+            margin-bottom: 18px;
             display: flex;
             align-items: center;
             gap: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
-        .filter-options {
+        .filter-group {
             display: flex;
             flex-direction: column;
             gap: 12px;
@@ -232,19 +198,16 @@
         .filter-option {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             cursor: pointer;
-            padding: 10px;
-            border-radius: 8px;
-            transition: all 0.3s ease;
+            padding: 12px;
+            border-radius: 10px;
+            transition: all 0.2s ease;
         }
 
-        .filter-option:hover {
-            background: white;
-        }
+        .filter-option:hover { background: var(--bg-gray); }
 
-        .filter-option input[type="checkbox"],
-        .filter-option input[type="radio"] {
+        .filter-option input[type="checkbox"] {
             width: 20px;
             height: 20px;
             cursor: pointer;
@@ -253,53 +216,103 @@
 
         .filter-option label {
             cursor: pointer;
-            font-size: 14px;
+            font-size: 15px;
             font-weight: 500;
             color: var(--text-primary);
             flex: 1;
         }
 
         .filter-count {
-            font-size: 12px;
+            font-size: 13px;
             color: var(--text-muted);
-            background: white;
+            background: var(--bg-gray);
             padding: 4px 10px;
             border-radius: 12px;
+            font-weight: 600;
         }
 
-        /* ===== FILTER TAGS ===== */
-        .filter-tags {
+        /* BOTÕES */
+        .sidebar-actions {
+            position: sticky;
+            bottom: 0;
+            background: white;
+            padding: 24px 0 0;
+            border-top: 2px solid var(--border-light);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .btn-search {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 4px 16px rgba(255, 77, 23, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .btn-search:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 77, 23, 0.4);
+        }
+
+        .btn-clear {
+            background: white;
+            color: var(--text-secondary);
+            border: 2px solid var(--border);
+            padding: 14px;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-clear:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        /* RESULTADOS */
+        .results-area {
+            flex: 1;
+            padding: 48px 40px;
+            background: var(--bg-gray);
+        }
+
+        /* TAGS ATIVAS */
+        .active-filters {
             display: flex;
             flex-wrap: wrap;
             gap: 12px;
-            margin-bottom: 24px;
+            margin-bottom: 32px;
+            justify-content: center;
         }
 
         .filter-tag {
             background: var(--primary);
             color: white;
-            padding: 8px 16px;
-            border-radius: 20px;
+            padding: 10px 18px;
+            border-radius: 24px;
             font-size: 14px;
             font-weight: 600;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
             animation: slideIn 0.3s ease;
         }
 
         @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateX(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .filter-tag-remove {
+        .filter-tag-close {
             background: none;
             border: none;
             color: white;
@@ -310,72 +323,23 @@
             transition: transform 0.2s ease;
         }
 
-        .filter-tag-remove:hover {
-            transform: scale(1.2);
-        }
+        .filter-tag-close:hover { transform: scale(1.3); }
 
-        /* ===== ACTION BUTTONS ===== */
-        .search-actions {
-            display: flex;
-            gap: 12px;
-            justify-content: center;
-        }
-
-        .btn-search {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
-            color: white;
-            border: none;
-            padding: 16px 48px;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-            box-shadow: 0 4px 16px rgba(255, 77, 23, 0.25);
-            transition: all 0.3s ease;
-        }
-
-        .btn-search:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 24px rgba(255, 77, 23, 0.35);
-        }
-
-        .btn-clear {
-            background: white;
-            color: var(--text-secondary);
-            border: 2px solid var(--border);
-            padding: 16px 36px;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .btn-clear:hover {
-            border-color: var(--primary);
-            color: var(--primary);
-        }
-
-        /* ===== RESULTS ===== */
-        .results-section {
-            padding: 0 5% 80px;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
+        /* HEADER RESULTADOS */
         .results-header {
-            background: var(--bg-gray);
-            padding: 20px 24px;
-            border-radius: 12px;
+            background: white;
+            padding: 24px 32px;
+            border-radius: 16px;
             margin-bottom: 32px;
+            box-shadow: var(--shadow-md);
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
         .results-count {
-            font-size: 18px;
-            font-weight: 700;
+            font-size: 22px;
+            font-weight: 800;
             color: var(--navy);
         }
 
@@ -385,42 +349,40 @@
             gap: 12px;
         }
 
+        .results-sort label {
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
         .results-sort select {
-            padding: 10px 16px;
+            padding: 12px 18px;
             border: 2px solid var(--border);
-            border-radius: 8px;
-            font-size: 14px;
+            border-radius: 10px;
+            font-size: 15px;
             font-weight: 600;
             cursor: pointer;
             outline: none;
-            transition: all 0.3s ease;
+            background: white;
         }
 
-        .results-sort select:focus {
-            border-color: var(--primary);
-        }
-
-        /* ===== GRID DE RESULTADOS ===== */
+        /* GRID */
         .results-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 32px;
+            grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+            gap: 28px;
         }
 
+        /* CARDS */
         .card {
             background: white;
             border-radius: 16px;
             overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            text-decoration: none;
-            color: inherit;
             border: 1px solid var(--border-light);
+            transition: all 0.4s ease;
             cursor: pointer;
         }
 
-        .card.hidden {
-            display: none;
-        }
+        .card.hidden { display: none; }
 
         .card:hover {
             transform: translateY(-8px);
@@ -432,38 +394,46 @@
             aspect-ratio: 16/10;
             overflow: hidden;
             position: relative;
-            background: var(--bg-dark);
+            background: var(--bg-gray);
         }
 
         .card-img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: transform 0.6s ease;
         }
 
-        .card:hover .card-img {
-            transform: scale(1.1);
-        }
+        .card:hover .card-img { transform: scale(1.1); }
 
         .card-badge {
             position: absolute;
-            top: 16px;
-            right: 16px;
+            top: 14px;
+            right: 14px;
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(8px);
             padding: 6px 14px;
             border-radius: 20px;
             font-size: 12px;
             font-weight: 700;
-            color: var(--primary);
             z-index: 2;
+        }
+
+        .card-badge.featured {
+            background: linear-gradient(135deg, var(--accent) 0%, #FFD93D 100%);
+            color: var(--navy);
+        }
+
+        .card-badge.kids {
+            background: linear-gradient(135deg, #EC4899 0%, #F472B6 100%);
+            color: white;
+            top: 48px;
         }
 
         .card-category {
             position: absolute;
-            top: 16px;
-            left: 16px;
+            top: 14px;
+            left: 14px;
             background: rgba(26, 11, 46, 0.85);
             backdrop-filter: blur(8px);
             color: white;
@@ -471,45 +441,51 @@
             border-radius: 20px;
             font-size: 12px;
             font-weight: 600;
+            z-index: 2;
         }
 
-        .card-body {
-            padding: 20px;
-        }
-
-        .card-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 8px;
-        }
+        .card-body { padding: 20px; }
 
         .card-title {
             font-weight: 700;
-            font-size: 20px;
+            font-size: 19px;
             color: var(--navy);
-            margin-bottom: 6px;
+            margin-bottom: 10px;
+            line-height: 1.3;
         }
 
         .card-rating {
-            display: flex;
+            display: inline-flex;
             align-items: center;
             gap: 4px;
             background: var(--bg-gray);
-            padding: 4px 10px;
+            padding: 5px 11px;
             border-radius: 20px;
-            flex-shrink: 0;
+            margin-right: 8px;
+            margin-bottom: 8px;
         }
 
-        .star {
-            color: var(--accent);
-            font-size: 14px;
-        }
+        .star { color: var(--accent); font-size: 14px; }
 
         .rating-value {
             font-weight: 700;
             font-size: 13px;
             color: var(--text-primary);
+        }
+
+        .rating-qv {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+        }
+
+        .rating-qv .star { color: white; }
+        .rating-qv .rating-value { color: white; }
+
+        .rating-google::after {
+            content: 'Google';
+            font-size: 9px;
+            opacity: 0.7;
+            margin-left: 2px;
         }
 
         .card-location {
@@ -518,7 +494,33 @@
             gap: 6px;
             color: var(--text-muted);
             font-size: 14px;
-            margin-bottom: 12px;
+            margin: 10px 0;
+        }
+
+        .card-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        .status-open .status-dot { background: var(--status-open); }
+        .status-closed .status-dot { background: var(--status-closed); }
+        .status-open { color: var(--status-open); }
+        .status-closed { color: var(--status-closed); }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
         }
 
         .card-footer {
@@ -537,862 +539,543 @@
 
         .card-info-tags {
             display: flex;
-            gap: 8px;
+            gap: 6px;
             flex-wrap: wrap;
         }
 
-        .info-tag {
-            font-size: 12px;
+        .tag {
+            font-size: 11px;
             color: var(--text-muted);
             background: var(--bg-gray);
-            padding: 4px 10px;
+            padding: 4px 9px;
             border-radius: 6px;
         }
 
-        .payment-icons {
-            display: flex;
-            gap: 6px;
-            margin-top: 8px;
+        .delivery-tag {
+            background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+            color: white;
+            font-weight: 600;
         }
 
-        .payment-icon {
-            font-size: 18px;
+        /* LOADING */
+        .loading { text-align: center; padding: 100px 20px; }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid var(--border);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 20px;
         }
 
-        /* ===== NO RESULTS ===== */
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .loading-small {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border: 2px solid var(--border);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+            margin-left: 6px;
+        }
+
+        /* NO RESULTS */
         .no-results {
             text-align: center;
-            padding: 80px 20px;
+            padding: 100px 20px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: var(--shadow-md);
         }
 
         .no-results h3 {
-            font-size: 28px;
+            font-size: 26px;
             color: var(--navy);
-            margin-bottom: 16px;
+            margin-bottom: 14px;
         }
 
         .no-results p {
-            font-size: 16px;
             color: var(--text-secondary);
-            margin-bottom: 32px;
+            font-size: 16px;
+            margin-bottom: 28px;
         }
 
-        .btn-back {
-            background: var(--bg-gray);
-            color: var(--text-primary);
-            text-decoration: none;
-            padding: 14px 32px;
-            border-radius: 12px;
-            font-weight: 600;
-            display: inline-block;
-            transition: all 0.3s ease;
-        }
-
-        .btn-back:hover {
-            background: var(--bg-dark);
-        }
-
-        /* ===== RESPONSIVE ===== */
-        @media (max-width: 768px) {
-            .page-header h1 {
-                font-size: 32px;
-            }
-
-            .filters-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .search-actions {
-                flex-direction: column;
-            }
-
-            .btn-search, .btn-clear {
+        /* RESPONSIVE */
+        @media (max-width: 1024px) {
+            .search-layout { flex-direction: column; }
+            .sidebar {
                 width: 100%;
+                position: relative;
+                top: 0;
+                height: auto;
+                border-right: none;
+                border-bottom: 1px solid var(--border-light);
             }
+            .results-area { padding: 32px 20px; }
+        }
 
-            .results-header {
-                flex-direction: column;
-                gap: 16px;
-                align-items: flex-start;
-            }
-
-            .results-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .nav-links a:not(.btn-primary) {
-                display: none;
-            }
+        @media (max-width: 768px) {
+            .page-header h1 { font-size: 30px; }
+            .results-header { flex-direction: column; gap: 16px; align-items: flex-start; }
+            .results-grid { grid-template-columns: 1fr; }
+            .nav-links a:not(.btn-primary) { display: none; }
         }
     </style>
 </head>
 <body>
 
-    <!-- ===== HEADER ===== -->
     <header>
         <a href="index.html" class="logo-container">
-            <img src="logo-qualvai.png" alt="QualVai" class="logo-icon">
+            <img src="logo-qualvai.png" alt="QualVai" class="logo-icon" onerror="this.style.display='none'">
             <div class="logo-text">
                 <span class="qual">Qual</span><span class="vai">Vai</span>
             </div>
         </a>
-
         <nav class="nav-links">
             <a href="index.html">Início</a>
             <a href="pesquisa.html" class="btn-primary">Pesquisa Avançada</a>
         </nav>
     </header>
 
-    <!-- ===== PAGE HEADER ===== -->
     <section class="page-header">
         <h1>Pesquisa Avançada</h1>
-        <p>Use os filtros abaixo para encontrar exatamente o que você procura</p>
+        <p>Use os filtros ao lado para encontrar exatamente o que você procura</p>
     </section>
 
-    <!-- ===== SEARCH SECTION ===== -->
-    <section class="search-section">
-        <div class="search-main">
-            <h2 class="search-title">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M10 4a6 6 0 100 12 6 6 0 000-12zm-8 6a8 8 0 1114.32 4.906l5.387 5.387a1 1 0 01-1.414 1.414l-5.387-5.387A8 8 0 012 10z"/>
-                </svg>
-                Pesquisa Livre
-            </h2>
+    <div class="search-layout">
+        
+        <aside class="sidebar">
+            <h2 class="sidebar-title">Filtros</h2>
+            <p class="sidebar-subtitle">Refine sua busca</p>
             
-            <div class="search-main-input">
-                <input 
-                    type="text" 
-                    id="freeSearch" 
-                    placeholder="Buscar por nome, localização, tipo de comida..."
-                >
-            </div>
-
-            <!-- FILTROS -->
-            <div class="filters-grid">
-                <!-- Tipo de Estabelecimento -->
+            <div class="filter-section">
+                <div class="filter-title">🏪 Tipo de Local</div>
                 <div class="filter-group">
-                    <div class="filter-group-title">
-                        🏪 Tipo de Estabelecimento
+                    <div class="filter-option">
+                        <input type="checkbox" id="cat-restaurante" value="restaurante">
+                        <label for="cat-restaurante">Restaurantes</label>
+                        <span class="filter-count" id="count-restaurante">0</span>
                     </div>
-                    <div class="filter-options">
-                        <div class="filter-option">
-                            <input type="checkbox" id="cat-restaurante" value="restaurante">
-                            <label for="cat-restaurante">Restaurantes</label>
-                            <span class="filter-count">4</span>
-                        </div>
-                        <div class="filter-option">
-                            <input type="checkbox" id="cat-bar" value="bar">
-                            <label for="cat-bar">Bares & Pubs</label>
-                            <span class="filter-count">2</span>
-                        </div>
-                        <div class="filter-option">
-                            <input type="checkbox" id="cat-cafe" value="cafe">
-                            <label for="cat-cafe">Cafés</label>
-                            <span class="filter-count">1</span>
-                        </div>
-                        <div class="filter-option">
-                            <input type="checkbox" id="cat-cultura" value="cultura">
-                            <label for="cat-cultura">Cultura</label>
-                            <span class="filter-count">2</span>
-                        </div>
-                        <div class="filter-option">
-                            <input type="checkbox" id="cat-natureza" value="natureza">
-                            <label for="cat-natureza">Natureza</label>
-                            <span class="filter-count">2</span>
-                        </div>
-                        <div class="filter-option">
-                            <input type="checkbox" id="cat-compras" value="compras">
-                            <label for="cat-compras">Compras</label>
-                            <span class="filter-count">1</span>
-                        </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="cat-bar" value="bar">
+                        <label for="cat-bar">Bares & Pubs</label>
+                        <span class="filter-count" id="count-bar">0</span>
                     </div>
-                </div>
-
-                <!-- Meios de Pagamento -->
-                <div class="filter-group">
-                    <div class="filter-group-title">
-                        💳 Meios de Pagamento
+                    <div class="filter-option">
+                        <input type="checkbox" id="cat-cafe" value="cafe">
+                        <label for="cat-cafe">Cafés</label>
+                        <span class="filter-count" id="count-cafe">0</span>
                     </div>
-                    <div class="filter-options">
-                        <div class="filter-option">
-                            <input type="checkbox" id="pay-credit" value="credit">
-                            <label for="pay-credit">Cartão de Crédito</label>
-                            <span class="filter-count">10</span>
-                        </div>
-                        <div class="filter-option">
-                            <input type="checkbox" id="pay-debit" value="debit">
-                            <label for="pay-debit">Cartão de Débito</label>
-                            <span class="filter-count">10</span>
-                        </div>
-                        <div class="filter-option">
-                            <input type="checkbox" id="pay-pix" value="pix">
-                            <label for="pay-pix">PIX</label>
-                            <span class="filter-count">9</span>
-                        </div>
-                        <div class="filter-option">
-                            <input type="checkbox" id="pay-cash" value="cash">
-                            <label for="pay-cash">Dinheiro</label>
-                            <span class="filter-count">12</span>
-                        </div>
-                        <div class="filter-option">
-                            <input type="checkbox" id="pay-voucher" value="voucher">
-                            <label for="pay-voucher">Vale Refeição</label>
-                            <span class="filter-count">7</span>
-                        </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="cat-cultura" value="cultura">
+                        <label for="cat-cultura">Cultura</label>
+                        <span class="filter-count" id="count-cultura">0</span>
                     </div>
-                </div>
-
-                <!-- Características -->
-                <div class="filter-group">
-                    <div class="filter-group-title">
-                        ⭐ Características
+                    <div class="filter-option">
+                        <input type="checkbox" id="cat-natureza" value="natureza">
+                        <label for="cat-natureza">Natureza</label>
+                        <span class="filter-count" id="count-natureza">0</span>
                     </div>
-                    <div class="filter-options">
-                        <div class="filter-option">
-                            <input type="checkbox" id="feat-delivery" value="delivery">
-                            <label for="feat-delivery">Delivery</label>
-                            <span class="filter-count">6</span>
-                        </div>
-                        <div class="filter-option">
-                            <input type="checkbox" id="feat-open" value="open">
-                            <label for="feat-open">Aberto Agora</label>
-                            <span class="filter-count">11</span>
-                        </div>
-                        <div class="filter-option">
-                            <input type="checkbox" id="feat-featured" value="featured">
-                            <label for="feat-featured">Destaques</label>
-                            <span class="filter-count">3</span>
-                        </div>
-                        <div class="filter-option">
-                            <input type="checkbox" id="feat-new" value="new">
-                            <label for="feat-new">Novidades</label>
-                            <span class="filter-count">3</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Faixa de Preço -->
-                <div class="filter-group">
-                    <div class="filter-group-title">
-                        💰 Faixa de Preço
-                    </div>
-                    <div class="filter-options">
-                        <div class="filter-option">
-                            <input type="radio" name="price" id="price-all" value="all" checked>
-                            <label for="price-all">Todos os preços</label>
-                        </div>
-                        <div class="filter-option">
-                            <input type="radio" name="price" id="price-1" value="$">
-                            <label for="price-1">$ - Econômico</label>
-                        </div>
-                        <div class="filter-option">
-                            <input type="radio" name="price" id="price-2" value="$$">
-                            <label for="price-2">$$ - Moderado</label>
-                        </div>
-                        <div class="filter-option">
-                            <input type="radio" name="price" id="price-3" value="$$-$$$">
-                            <label for="price-3">$$-$$$ - Acima da Média</label>
-                        </div>
-                        <div class="filter-option">
-                            <input type="radio" name="price" id="price-4" value="$$$">
-                            <label for="price-4">$$$ - Premium</label>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Avaliação -->
-                <div class="filter-group">
-                    <div class="filter-group-title">
-                        ⭐ Avaliação Mínima
-                    </div>
-                    <div class="filter-options">
-                        <div class="filter-option">
-                            <input type="radio" name="rating" id="rating-all" value="0" checked>
-                            <label for="rating-all">Todas as avaliações</label>
-                        </div>
-                        <div class="filter-option">
-                            <input type="radio" name="rating" id="rating-3" value="3">
-                            <label for="rating-3">⭐ 3.0+</label>
-                        </div>
-                        <div class="filter-option">
-                            <input type="radio" name="rating" id="rating-4" value="4">
-                            <label for="rating-4">⭐ 4.0+</label>
-                        </div>
-                        <div class="filter-option">
-                            <input type="radio" name="rating" id="rating-45" value="4.5">
-                            <label for="rating-45">⭐ 4.5+</label>
-                        </div>
-                        <div class="filter-option">
-                            <input type="radio" name="rating" id="rating-47" value="4.7">
-                            <label for="rating-47">⭐ 4.7+ (Excelente)</label>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Localização -->
-                <div class="filter-group">
-                    <div class="filter-group-title">
-                        📍 Localização
-                    </div>
-                    <div class="filter-options">
-                        <div class="filter-option">
-                            <input type="checkbox" id="loc-vitoria" value="Vitória">
-                            <label for="loc-vitoria">Vitória</label>
-                            <span class="filter-count">5</span>
-                        </div>
-                        <div class="filter-option">
-                            <input type="checkbox" id="loc-praia-canto" value="Praia do Canto">
-                            <label for="loc-praia-canto">Praia do Canto</label>
-                            <span class="filter-count">2</span>
-                        </div>
-                        <div class="filter-option">
-                            <input type="checkbox" id="loc-jardim-camburi" value="Jardim Camburi">
-                            <label for="loc-jardim-camburi">Jardim Camburi</label>
-                            <span class="filter-count">1</span>
-                        </div>
-                        <div class="filter-option">
-                            <input type="checkbox" id="loc-vila-velha" value="Vila Velha">
-                            <label for="loc-vila-velha">Vila Velha</label>
-                            <span class="filter-count">2</span>
-                        </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="cat-compras" value="compras">
+                        <label for="cat-compras">Compras</label>
+                        <span class="filter-count" id="count-compras">0</span>
                     </div>
                 </div>
             </div>
 
-            <!-- TAGS DE FILTROS ATIVOS -->
-            <div class="filter-tags" id="filterTags"></div>
-
-            <!-- BOTÕES DE AÇÃO -->
-            <div class="search-actions">
-                <button class="btn-search" id="btnSearch">
-                    🔍 Buscar
-                </button>
-                <button class="btn-clear" id="btnClear">
-                    ✕ Limpar Filtros
-                </button>
+            <div class="filter-section">
+                <div class="filter-title">⭐ Características</div>
+                <div class="filter-group">
+                    <div class="filter-option">
+                        <input type="checkbox" id="feat-featured" value="featured">
+                        <label for="feat-featured">⭐ Em Destaque</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="feat-delivery" value="delivery">
+                        <label for="feat-delivery">🛵 Delivery</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="feat-kids" value="kids">
+                        <label for="feat-kids">👶 Área Kids</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="feat-open" value="open">
+                        <label for="feat-open">🟢 Aberto Agora</label>
+                    </div>
+                </div>
             </div>
-        </div>
-    </section>
 
-    <!-- ===== RESULTS SECTION ===== -->
-    <section class="results-section">
-        <div class="results-header">
-            <div class="results-count" id="resultsCount">12 resultados encontrados</div>
-            <div class="results-sort">
-                <label for="sortBy">Ordenar por:</label>
-                <select id="sortBy">
-                    <option value="relevance">Mais Relevantes</option>
-                    <option value="rating">Melhor Avaliados</option>
-                    <option value="distance">Mais Próximos</option>
-                    <option value="price-low">Menor Preço</option>
-                    <option value="price-high">Maior Preço</option>
-                </select>
+            <div class="filter-section">
+                <div class="filter-title">💳 Pagamento</div>
+                <div class="filter-group">
+                    <div class="filter-option">
+                        <input type="checkbox" id="pay-pix" value="pix">
+                        <label for="pay-pix">📱 PIX</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="pay-card" value="cartão">
+                        <label for="pay-card">💳 Cartão</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="pay-cash" value="dinheiro">
+                        <label for="pay-cash">💵 Dinheiro</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="pay-voucher" value="voucher">
+                        <label for="pay-voucher">🎫 Voucher</label>
+                    </div>
+                </div>
             </div>
-        </div>
 
-        <div class="results-grid" id="resultsGrid">
-            <!-- Results will be inserted here -->
-        </div>
+            <div class="sidebar-actions">
+                <button class="btn-search" id="btnApply">🔍 Aplicar Filtros</button>
+                <button class="btn-clear" id="btnClear">✕ Limpar Tudo</button>
+            </div>
+        </aside>
 
-        <div class="no-results hidden" id="noResults">
-            <h3>Nenhum resultado encontrado</h3>
-            <p>Tente ajustar os filtros ou fazer uma nova busca</p>
-            <a href="index.html" class="btn-back">← Voltar para a página inicial</a>
-        </div>
-    </section>
+        <main class="results-area">
+            <div class="active-filters" id="activeTags"></div>
+
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p>Carregando lugares...</p>
+            </div>
+
+            <div class="results-header" id="resultsHeader" style="display: none;">
+                <div class="results-count" id="resultsCount">0 lugares</div>
+                <div class="results-sort">
+                    <label for="sortBy">Ordenar:</label>
+                    <select id="sortBy">
+                        <option value="relevance">Mais Relevantes</option>
+                        <option value="rating">Melhor Avaliados</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="results-grid" id="resultsGrid"></div>
+
+            <div class="no-results" id="noResults" style="display: none;">
+                <h3>Nenhum resultado encontrado</h3>
+                <p>Tente ajustar os filtros ou limpar a busca</p>
+                <button class="btn-clear" onclick="clearAll()">Limpar Filtros</button>
+            </div>
+        </main>
+    </div>
 
     <script>
-        // ===== DATABASE =====
-        const places = [
-            {
-                id: 1,
-                name: 'Ilha Gastronômica',
-                category: 'restaurante',
-                image: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&q=80&w=800',
-                rating: 4.8,
-                location: 'Vitória, ES',
-                distance: 2.3,
-                price: '$$-$$$',
-                tags: ['Italiana', 'Frutos do mar'],
-                featured: true,
-                new: false,
-                delivery: true,
-                open: true,
-                payments: ['credit', 'debit', 'pix', 'cash', 'voucher']
-            },
-            {
-                id: 2,
-                name: 'Bar do Triângulo',
-                category: 'bar',
-                image: 'https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&q=80&w=800',
-                rating: 4.6,
-                location: 'Praia do Canto',
-                distance: 1.8,
-                price: '$$',
-                tags: ['Cervejaria', 'Música ao vivo'],
-                featured: false,
-                new: false,
-                delivery: false,
-                open: true,
-                payments: ['credit', 'debit', 'pix', 'cash']
-            },
-            {
-                id: 3,
-                name: 'Café Cultural',
-                category: 'cafe',
-                image: 'https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&q=80&w=800',
-                rating: 4.9,
-                location: 'Jardim Camburi',
-                distance: 3.5,
-                price: '$$',
-                tags: ['Café especial', 'Brunch'],
-                featured: false,
-                new: true,
-                delivery: true,
-                open: true,
-                payments: ['credit', 'debit', 'pix', 'cash']
-            },
-            {
-                id: 4,
-                name: 'Pizzaria Bella Napoli',
-                category: 'restaurante',
-                image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&q=80&w=800',
-                rating: 4.7,
-                location: 'Praia da Costa',
-                distance: 4.2,
-                price: '$$',
-                tags: ['Pizza', 'Italiana'],
-                featured: true,
-                new: false,
-                delivery: true,
-                open: true,
-                payments: ['credit', 'debit', 'pix', 'cash', 'voucher']
-            },
-            {
-                id: 5,
-                name: 'Teatro Carlos Gomes',
-                category: 'cultura',
-                image: 'https://images.unsplash.com/photo-1503095396549-807759245b35?auto=format&fit=crop&q=80&w=800',
-                rating: 4.8,
-                location: 'Centro, Vitória',
-                distance: 5.1,
-                price: '$$$',
-                tags: ['Teatro', 'Shows'],
-                featured: false,
-                new: false,
-                delivery: false,
-                open: true,
-                payments: ['credit', 'debit', 'pix']
-            },
-            {
-                id: 6,
-                name: 'Parque da Fonte Grande',
-                category: 'natureza',
-                image: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&q=80&w=800',
-                rating: 4.6,
-                location: 'Vitória, ES',
-                distance: 6.8,
-                price: 'Grátis',
-                tags: ['Trilha', 'Vista panorâmica'],
-                featured: false,
-                new: false,
-                delivery: false,
-                open: true,
-                payments: ['cash']
-            },
-            {
-                id: 7,
-                name: 'Shopping Vitória',
-                category: 'compras',
-                image: 'https://images.unsplash.com/photo-1519567241046-7f570eee3ce6?auto=format&fit=crop&q=80&w=800',
-                rating: 4.5,
-                location: 'Enseada do Suá',
-                distance: 2.1,
-                price: '$$-$$$',
-                tags: ['Shopping', 'Lojas'],
-                featured: false,
-                new: false,
-                delivery: false,
-                open: true,
-                payments: ['credit', 'debit', 'pix', 'cash']
-            },
-            {
-                id: 8,
-                name: 'Sushi Zen',
-                category: 'restaurante',
-                image: 'https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?auto=format&fit=crop&q=80&w=800',
-                rating: 4.9,
-                location: 'Praia do Canto',
-                distance: 2.0,
-                price: '$$$',
-                tags: ['Japonês', 'Sushi'],
-                featured: true,
-                new: true,
-                delivery: true,
-                open: true,
-                payments: ['credit', 'debit', 'pix', 'voucher']
-            },
-            {
-                id: 9,
-                name: 'Pub Irlandês',
-                category: 'bar',
-                image: 'https://images.unsplash.com/photo-1572116469696-31de0f17cc34?auto=format&fit=crop&q=80&w=800',
-                rating: 4.4,
-                location: 'Jardim da Penha',
-                distance: 3.9,
-                price: '$$',
-                tags: ['Pub', 'Happy hour'],
-                featured: false,
-                new: false,
-                delivery: false,
-                open: false,
-                payments: ['credit', 'debit', 'cash']
-            },
-            {
-                id: 10,
-                name: 'Museu Vale',
-                category: 'cultura',
-                image: 'https://images.unsplash.com/photo-1518998053901-5348d3961a04?auto=format&fit=crop&q=80&w=800',
-                rating: 4.7,
-                location: 'Vila Velha, ES',
-                distance: 8.5,
-                price: '$',
-                tags: ['Museu', 'Arte'],
-                featured: false,
-                new: false,
-                delivery: false,
-                open: true,
-                payments: ['credit', 'debit', 'pix', 'cash']
-            },
-            {
-                id: 11,
-                name: 'Hamburgeria Artesanal',
-                category: 'restaurante',
-                image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&q=80&w=800',
-                rating: 4.6,
-                location: 'Mata da Praia',
-                distance: 1.5,
-                price: '$$',
-                tags: ['Hambúrguer', 'Artesanal'],
-                featured: false,
-                new: true,
-                delivery: true,
-                open: true,
-                payments: ['credit', 'debit', 'pix', 'cash', 'voucher']
-            },
-            {
-                id: 12,
-                name: 'Praia de Camburi',
-                category: 'natureza',
-                image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&q=80&w=800',
-                rating: 4.3,
-                location: 'Camburi, Vitória',
-                distance: 4.5,
-                price: 'Grátis',
-                tags: ['Praia', 'Esportes'],
-                featured: false,
-                new: false,
-                delivery: false,
-                open: true,
-                payments: ['cash']
-            }
-        ];
+        const SHEET_ID = '1tKwZvr27lHo2iV2rR6yxiPqxGgbP517auUOBib1DBcI';
+        const SHEET_NAME = 'lugares';
+        let placesData = [];
+        let filteredData = [];
+        let googlePlacesService = null;
+        let activeFilters = { categories: [], features: [], payments: [] };
 
-        // ===== FILTROS ATIVOS =====
-        let activeFilters = {
-            search: '',
-            categories: [],
-            payments: [],
-            features: [],
-            price: 'all',
-            rating: 0,
-            locations: []
+        window.onGooglePlacesReady = function() {
+            const div = document.createElement('div');
+            googlePlacesService = new google.maps.places.PlacesService(div);
+            console.log('✅ Google Places pronto!');
+            if (placesData.length > 0) updateGoogleData();
         };
 
-        // ===== RENDERIZAR RESULTADOS =====
-        function renderResults(results) {
+        function fetchGoogleDetails(place, card) {
+            if (!place.placeId || !googlePlacesService) return;
+            googlePlacesService.getDetails({
+                placeId: place.placeId,
+                fields: ['rating', 'user_ratings_total', 'opening_hours']
+            }, (result, status) => {
+                if (status === google.maps.places.PlacesServiceStatus.OK) {
+                    if (result.rating) {
+                        const ratingEl = card.querySelector('.rating-google .rating-value');
+                        if (ratingEl) {
+                            const loading = ratingEl.querySelector('.loading-small');
+                            if (loading) loading.remove();
+                            ratingEl.innerHTML = result.rating.toFixed(1);
+                            const count = document.createElement('span');
+                            count.style.fontSize = '10px';
+                            count.style.opacity = '0.7';
+                            count.style.marginLeft = '3px';
+                            count.textContent = `(${result.user_ratings_total})`;
+                            ratingEl.appendChild(count);
+                        }
+                    }
+                    if (result.opening_hours) {
+                        const isOpen = result.opening_hours.isOpen();
+                        const statusEl = card.querySelector('.card-status');
+                        if (statusEl) {
+                            const loading = statusEl.querySelector('.loading-small');
+                            if (loading) loading.remove();
+                            statusEl.className = `card-status ${isOpen ? 'status-open' : 'status-closed'}`;
+                            statusEl.innerHTML = `<span class="status-dot"></span>${isOpen ? 'Aberto agora' : 'Fechado'}`;
+                        }
+                    }
+                }
+            });
+        }
+
+        function updateGoogleData() {
+            if (!googlePlacesService) return;
+            document.querySelectorAll('.card[data-placeid]').forEach(card => {
+                const placeId = card.dataset.placeid;
+                const place = placesData.find(p => p.placeId === placeId);
+                if (place) fetchGoogleDetails(place, card);
+            });
+        }
+
+        function handleSheetData(data) {
+            console.log('✅ Dados recebidos!');
+            try {
+                const rows = data.table.rows;
+                placesData = [];
+                rows.forEach((row, index) => {
+                    const c = row.c;
+                    const name = c[0]?.v || c[0]?.f || '';
+                    if (!name.trim()) return;
+                    placesData.push({
+                        id: index,
+                        name: name,
+                        category: (c[1]?.v || c[1]?.f || 'outros').toLowerCase().trim(),
+                        image: c[2]?.v || c[2]?.f || 'https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=400',
+                        location: c[3]?.v || c[3]?.f || '',
+                        distance: c[4]?.v || c[4]?.f || '',
+                        price: c[5]?.v || c[5]?.f || '',
+                        tags: (c[6]?.v || c[6]?.f || '').split(',').map(t => t.trim()).filter(t => t),
+                        featured: (c[7]?.v || c[7]?.f || '').toLowerCase() === 'sim',
+                        placeId: c[8]?.v || c[8]?.f || null,
+                        rating: parseFloat(c[9]?.v || c[9]?.f || 0),
+                        status: (c[10]?.v || c[10]?.f || 'aberto').toLowerCase(),
+                        delivery: (c[11]?.v || c[11]?.f || '').toLowerCase() === 'sim',
+                        payment: c[12]?.v || c[12]?.f || '',
+                        ratingQV: parseFloat(c[13]?.v || c[13]?.f || 0),
+                        areaKids: (c[14]?.v || c[14]?.f || '').toLowerCase() === 'sim'
+                    });
+                });
+                placesData.sort((a, b) => {
+                    if (a.featured && !b.featured) return -1;
+                    if (!a.featured && b.featured) return 1;
+                    return 0;
+                });
+                console.log(`✅ ${placesData.length} lugares!`);
+                localStorage.setItem('qualvai_cache', JSON.stringify({ data: placesData, timestamp: Date.now() }));
+                updateCounts();
+                applyFilters();
+                if (googlePlacesService) updateGoogleData();
+            } catch (error) {
+                console.error('❌ Erro:', error);
+            }
+        }
+
+        function fetchPlacesFromSheet() {
+            const script = document.createElement('script');
+            script.src = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=responseHandler:handleSheetData&sheet=${SHEET_NAME}`;
+            document.head.appendChild(script);
+        }
+
+        function updateCounts() {
+            const counts = {};
+            placesData.forEach(p => { counts[p.category] = (counts[p.category] || 0) + 1; });
+            Object.keys(counts).forEach(cat => {
+                const el = document.getElementById(`count-${cat}`);
+                if (el) el.textContent = counts[cat];
+            });
+        }
+
+        function applyFilters() {
+            let filtered = [...placesData];
+            if (activeFilters.categories.length > 0) {
+                filtered = filtered.filter(p => activeFilters.categories.includes(p.category));
+            }
+            if (activeFilters.features.includes('featured')) {
+                filtered = filtered.filter(p => p.featured);
+            }
+            if (activeFilters.features.includes('delivery')) {
+                filtered = filtered.filter(p => p.delivery);
+            }
+            if (activeFilters.features.includes('kids')) {
+                filtered = filtered.filter(p => p.areaKids);
+            }
+            if (activeFilters.features.includes('open')) {
+                filtered = filtered.filter(p => p.status === 'aberto');
+            }
+            if (activeFilters.payments.length > 0) {
+                filtered = filtered.filter(p => {
+                    const payment = p.payment.toLowerCase();
+                    return activeFilters.payments.some(pay => payment.includes(pay));
+                });
+            }
+            filteredData = filtered;
+            renderResults(filtered);
+            updateTags();
+        }
+
+        function renderResults(places) {
             const grid = document.getElementById('resultsGrid');
+            const loading = document.getElementById('loading');
+            const header = document.getElementById('resultsHeader');
+            const count = document.getElementById('resultsCount');
             const noResults = document.getElementById('noResults');
-            const resultsCount = document.getElementById('resultsCount');
 
             grid.innerHTML = '';
+            loading.style.display = 'none';
 
-            if (results.length === 0) {
-                noResults.classList.remove('hidden');
-                resultsCount.textContent = '0 resultados encontrados';
+            if (places.length === 0) {
+                header.style.display = 'none';
+                noResults.style.display = 'block';
                 return;
             }
 
-            noResults.classList.add('hidden');
-            resultsCount.textContent = `${results.length} resultado${results.length !== 1 ? 's' : ''} encontrado${results.length !== 1 ? 's' : ''}`;
+            header.style.display = 'flex';
+            noResults.style.display = 'none';
+            count.textContent = `${places.length} lugar${places.length !== 1 ? 'es' : ''}`;
 
-            results.forEach(place => {
-                const card = document.createElement('a');
-                card.href = '#';
+            places.forEach(place => {
+                const card = document.createElement('div');
                 card.className = 'card';
+                card.dataset.id = place.id;
+                if (place.placeId) card.dataset.placeid = place.placeId;
 
-                const paymentIcons = place.payments.map(p => {
-                    const icons = {
-                        'credit': '💳',
-                        'debit': '💳',
-                        'pix': '📱',
-                        'cash': '💵',
-                        'voucher': '🎫'
-                    };
-                    return `<span class="payment-icon" title="${p}">${icons[p]}</span>`;
-                }).join('');
+                const isOpen = place.status === 'aberto';
+                let statusHtml = `<div class="card-status ${isOpen ? 'status-open' : 'status-closed'}"><span class="status-dot"></span>${isOpen ? 'Aberto agora' : 'Fechado'}${place.placeId ? '<span class="loading-small"></span>' : ''}</div>`;
+
+                let deliveryBadge = place.delivery ? '<span class="tag delivery-tag">🛵 Delivery</span>' : '';
+
+                let ratingsHtml = '';
+                if (place.ratingQV > 0) {
+                    ratingsHtml += `<div class="card-rating rating-qv"><span class="star">★</span><span class="rating-value">${place.ratingQV.toFixed(1)}</span></div>`;
+                }
+                if (place.rating > 0 || place.placeId) {
+                    ratingsHtml += `<div class="card-rating rating-google"><span class="star">★</span><span class="rating-value">${place.rating > 0 ? place.rating.toFixed(1) : '...'}${place.placeId && place.rating === 0 ? '<span class="loading-small"></span>' : ''}</span></div>`;
+                }
 
                 card.innerHTML = `
                     <div class="card-img-container">
                         <span class="card-category">${getCategoryName(place.category)}</span>
-                        ${place.featured ? '<span class="card-badge">⭐ Destaque</span>' : ''}
-                        ${place.new && !place.featured ? '<span class="card-badge">Novo</span>' : ''}
-                        <img src="${place.image}" class="card-img" alt="${place.name}">
+                        ${place.featured ? '<span class="card-badge featured">⭐ Destaque</span>' : ''}
+                        ${place.areaKids ? '<span class="card-badge kids">👶 Kids</span>' : ''}
+                        <img src="${place.image}" class="card-img" alt="${place.name}" onerror="this.src='https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=400'">
                     </div>
                     <div class="card-body">
-                        <div class="card-top">
-                            <h3 class="card-title">${place.name}</h3>
-                            <div class="card-rating">
-                                <span class="star">★</span>
-                                <span class="rating-value">${place.rating}</span>
-                            </div>
-                        </div>
+                        <h3 class="card-title">${place.name}</h3>
+                        <div>${ratingsHtml}</div>
                         <div class="card-location">
                             <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor">
                                 <path d="M7 0C4.24 0 2 2.24 2 5c0 3.5 5 9 5 9s5-5.5 5-9c0-2.76-2.24-5-5-5zm0 7a2 2 0 110-4 2 2 0 010 4z"/>
                             </svg>
-                            ${place.location} · ${place.distance} km
+                            ${place.location}${place.distance ? ' · ' + place.distance : ''}
                         </div>
-                        <div class="payment-icons">
-                            ${paymentIcons}
-                        </div>
+                        ${statusHtml}
                         <div class="card-footer">
                             <div class="card-info-tags">
-                                ${place.tags.map(tag => `<span class="info-tag">${tag}</span>`).join('')}
+                                ${deliveryBadge}
+                                ${place.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
                             </div>
-                            <span class="card-price">${place.price}</span>
+                            ${place.price ? `<span class="card-price">${place.price}</span>` : ''}
                         </div>
                     </div>
                 `;
 
                 grid.appendChild(card);
+                if (place.placeId && googlePlacesService) fetchGoogleDetails(place, card);
             });
         }
 
-        // ===== CATEGORIA NOME =====
-        function getCategoryName(category) {
-            const names = {
-                'restaurante': 'Restaurante',
-                'bar': 'Bar',
-                'cafe': 'Café',
-                'cultura': 'Cultura',
-                'natureza': 'Natureza',
-                'compras': 'Compras'
-            };
-            return names[category] || category;
+        function getCategoryName(cat) {
+            const names = { restaurante: 'Restaurante', bar: 'Bar', cafe: 'Café', cultura: 'Cultura', natureza: 'Natureza', compras: 'Compras' };
+            return names[cat] || cat.charAt(0).toUpperCase() + cat.slice(1);
         }
 
-        // ===== APLICAR FILTROS =====
-        function applyFilters() {
-            let filtered = places;
-
-            // Busca livre
-            if (activeFilters.search) {
-                const search = activeFilters.search.toLowerCase();
-                filtered = filtered.filter(p => 
-                    p.name.toLowerCase().includes(search) ||
-                    p.location.toLowerCase().includes(search) ||
-                    p.tags.some(t => t.toLowerCase().includes(search))
-                );
-            }
-
-            // Categorias
-            if (activeFilters.categories.length > 0) {
-                filtered = filtered.filter(p => activeFilters.categories.includes(p.category));
-            }
-
-            // Pagamentos
-            if (activeFilters.payments.length > 0) {
-                filtered = filtered.filter(p => 
-                    activeFilters.payments.some(pay => p.payments.includes(pay))
-                );
-            }
-
-            // Features
-            if (activeFilters.features.includes('delivery')) {
-                filtered = filtered.filter(p => p.delivery);
-            }
-            if (activeFilters.features.includes('open')) {
-                filtered = filtered.filter(p => p.open);
-            }
-            if (activeFilters.features.includes('featured')) {
-                filtered = filtered.filter(p => p.featured);
-            }
-            if (activeFilters.features.includes('new')) {
-                filtered = filtered.filter(p => p.new);
-            }
-
-            // Preço
-            if (activeFilters.price !== 'all') {
-                filtered = filtered.filter(p => p.price === activeFilters.price);
-            }
-
-            // Rating
-            if (activeFilters.rating > 0) {
-                filtered = filtered.filter(p => p.rating >= activeFilters.rating);
-            }
-
-            // Localização
-            if (activeFilters.locations.length > 0) {
-                filtered = filtered.filter(p => 
-                    activeFilters.locations.some(loc => p.location.includes(loc))
-                );
-            }
-
-            renderResults(filtered);
-            updateFilterTags();
-        }
-
-        // ===== ATUALIZAR TAGS DE FILTROS =====
-        function updateFilterTags() {
-            const container = document.getElementById('filterTags');
+        function updateTags() {
+            const container = document.getElementById('activeTags');
             container.innerHTML = '';
-
             const tags = [];
-
-            if (activeFilters.search) {
-                tags.push({ label: `Busca: "${activeFilters.search}"`, type: 'search' });
-            }
 
             activeFilters.categories.forEach(cat => {
                 tags.push({ label: getCategoryName(cat), type: 'category', value: cat });
             });
-
-            activeFilters.payments.forEach(pay => {
-                const names = { credit: 'Crédito', debit: 'Débito', pix: 'PIX', cash: 'Dinheiro', voucher: 'Vale' };
-                tags.push({ label: names[pay], type: 'payment', value: pay });
-            });
-
             activeFilters.features.forEach(feat => {
-                const names = { delivery: 'Delivery', open: 'Aberto', featured: 'Destaque', new: 'Novo' };
+                const names = { featured: '⭐ Destaque', delivery: '🛵 Delivery', kids: '👶 Kids', open: '🟢 Aberto' };
                 tags.push({ label: names[feat], type: 'feature', value: feat });
             });
-
-            if (activeFilters.price !== 'all') {
-                tags.push({ label: `Preço: ${activeFilters.price}`, type: 'price' });
-            }
-
-            if (activeFilters.rating > 0) {
-                tags.push({ label: `⭐ ${activeFilters.rating}+`, type: 'rating' });
-            }
-
-            activeFilters.locations.forEach(loc => {
-                tags.push({ label: loc, type: 'location', value: loc });
+            activeFilters.payments.forEach(pay => {
+                const names = { pix: '📱 PIX', cartão: '💳 Cartão', dinheiro: '💵 Dinheiro', voucher: '🎫 Voucher' };
+                tags.push({ label: names[pay], type: 'payment', value: pay });
             });
 
             tags.forEach(tag => {
                 const tagEl = document.createElement('div');
                 tagEl.className = 'filter-tag';
-                tagEl.innerHTML = `
-                    ${tag.label}
-                    <button class="filter-tag-remove" onclick="removeFilter('${tag.type}', '${tag.value || ''}')">×</button>
-                `;
+                tagEl.innerHTML = `${tag.label}<button class="filter-tag-close" onclick="removeFilter('${tag.type}', '${tag.value}')">×</button>`;
                 container.appendChild(tagEl);
             });
         }
 
-        // ===== REMOVER FILTRO =====
         function removeFilter(type, value) {
             switch(type) {
-                case 'search':
-                    activeFilters.search = '';
-                    document.getElementById('freeSearch').value = '';
-                    break;
                 case 'category':
                     activeFilters.categories = activeFilters.categories.filter(c => c !== value);
                     document.getElementById(`cat-${value}`).checked = false;
-                    break;
-                case 'payment':
-                    activeFilters.payments = activeFilters.payments.filter(p => p !== value);
-                    document.getElementById(`pay-${value}`).checked = false;
                     break;
                 case 'feature':
                     activeFilters.features = activeFilters.features.filter(f => f !== value);
                     document.getElementById(`feat-${value}`).checked = false;
                     break;
-                case 'price':
-                    activeFilters.price = 'all';
-                    document.getElementById('price-all').checked = true;
-                    break;
-                case 'rating':
-                    activeFilters.rating = 0;
-                    document.getElementById('rating-all').checked = true;
-                    break;
-                case 'location':
-                    activeFilters.locations = activeFilters.locations.filter(l => l !== value);
-                    document.querySelector(`#loc-${value.toLowerCase().replace(/ /g, '-')}`).checked = false;
+                case 'payment':
+                    activeFilters.payments = activeFilters.payments.filter(p => p !== value);
+                    document.getElementById(`pay-${value}`).checked = false;
                     break;
             }
             applyFilters();
         }
 
-        // ===== EVENT LISTENERS =====
-        document.getElementById('btnSearch').addEventListener('click', () => {
-            // Busca livre
-            activeFilters.search = document.getElementById('freeSearch').value.trim();
-
-            // Categorias
-            activeFilters.categories = Array.from(document.querySelectorAll('[id^="cat-"]:checked')).map(cb => cb.value);
-
-            // Pagamentos
-            activeFilters.payments = Array.from(document.querySelectorAll('[id^="pay-"]:checked')).map(cb => cb.value);
-
-            // Features
-            activeFilters.features = Array.from(document.querySelectorAll('[id^="feat-"]:checked')).map(cb => cb.value);
-
-            // Preço
-            const priceChecked = document.querySelector('[name="price"]:checked');
-            activeFilters.price = priceChecked ? priceChecked.value : 'all';
-
-            // Rating
-            const ratingChecked = document.querySelector('[name="rating"]:checked');
-            activeFilters.rating = ratingChecked ? parseFloat(ratingChecked.value) : 0;
-
-            // Localização
-            activeFilters.locations = Array.from(document.querySelectorAll('[id^="loc-"]:checked')).map(cb => cb.value);
-
-            applyFilters();
-        });
-
-        document.getElementById('btnClear').addEventListener('click', () => {
-            // Limpar todos os campos
-            document.getElementById('freeSearch').value = '';
+        function clearAll() {
+            activeFilters = { categories: [], features: [], payments: [] };
             document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
-            document.getElementById('price-all').checked = true;
-            document.getElementById('rating-all').checked = true;
+            applyFilters();
+        }
 
-            // Resetar filtros
-            activeFilters = {
-                search: '',
-                categories: [],
-                payments: [],
-                features: [],
-                price: 'all',
-                rating: 0,
-                locations: []
-            };
-
+        document.getElementById('btnApply').addEventListener('click', () => {
+            activeFilters.categories = Array.from(document.querySelectorAll('[id^="cat-"]:checked')).map(cb => cb.value);
+            activeFilters.features = Array.from(document.querySelectorAll('[id^="feat-"]:checked')).map(cb => cb.value);
+            activeFilters.payments = Array.from(document.querySelectorAll('[id^="pay-"]:checked')).map(cb => cb.value);
             applyFilters();
         });
 
-        // Ordenação
+        document.getElementById('btnClear').addEventListener('click', clearAll);
+
         document.getElementById('sortBy').addEventListener('change', function() {
-            // TODO: Implementar ordenação
-            console.log('Ordenar por:', this.value);
+            if (this.value === 'rating') {
+                filteredData.sort((a, b) => {
+                    const ratingA = Math.max(a.rating, a.ratingQV);
+                    const ratingB = Math.max(b.rating, b.ratingQV);
+                    return ratingB - ratingA;
+                });
+            } else {
+                filteredData.sort((a, b) => {
+                    if (a.featured && !b.featured) return -1;
+                    if (!a.featured && b.featured) return 1;
+                    return 0;
+                });
+            }
+            renderResults(filteredData);
         });
 
-        // ===== INICIALIZAR =====
-        renderResults(places);
+        document.addEventListener('DOMContentLoaded', () => {
+            const cache = localStorage.getItem('qualvai_cache');
+            if (cache) {
+                const cached = JSON.parse(cache);
+                if (Date.now() - cached.timestamp < 3600000) {
+                    placesData = cached.data;
+                    updateCounts();
+                    applyFilters();
+                    return;
+                }
+            }
+            fetchPlacesFromSheet();
+        });
     </script>
 
 </body>
