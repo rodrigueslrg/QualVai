@@ -9,19 +9,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
     
-    <!-- Google Places API -->
-    <script>
-        function initMap() {
-            console.log('✅ Google Places API carregada!');
-            if (window.onGooglePlacesReady) {
-                window.onGooglePlacesReady();
-            }
-        }
-    </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBqWHhpaździCKgB7vK3W_tZNNgQxOEYrQs&libraries=places&callback=initMap" async defer></script>
     
     <style>
-        /* ===== SISTEMA DE CORES PREMIUM ===== */
         :root {
             --primary: #FF4D17;
             --primary-dark: #E03D0F;
@@ -57,7 +47,6 @@
             overflow-x: hidden;
         }
 
-        /* ===== HEADER ===== */
         header {
             display: flex;
             justify-content: space-between;
@@ -84,10 +73,7 @@
 
         .logo-container:hover { transform: scale(1.02); }
 
-        .logo-icon {
-            width: 45px;
-            height: 45px;
-        }
+        .logo-icon { width: 45px; height: 45px; }
 
         .logo-text { 
             font-family: 'Poppins', sans-serif; 
@@ -115,7 +101,6 @@
             padding: 14px 24px; 
             border-radius: 60px; 
             transition: all 0.3s ease;
-            position: relative;
         }
 
         .search-bar:focus-within {
@@ -124,12 +109,7 @@
             box-shadow: 0 4px 20px rgba(255, 77, 23, 0.15);
         }
 
-        .search-icon {
-            width: 20px;
-            height: 20px;
-            margin-right: 12px;
-            opacity: 0.5;
-        }
+        .search-icon { width: 20px; height: 20px; margin-right: 12px; opacity: 0.5; }
 
         .search-bar input { 
             border: none; 
@@ -141,9 +121,7 @@
             color: var(--text-primary);
         }
 
-        .search-bar input::placeholder {
-            color: var(--text-muted);
-        }
+        .search-bar input::placeholder { color: var(--text-muted); }
 
         /* Badge IA */
         .ia-badge {
@@ -161,9 +139,7 @@
             animation: pulse-ia 2s infinite;
         }
 
-        .ia-badge.active {
-            display: block;
-        }
+        .ia-badge.active { display: block; }
 
         @keyframes pulse-ia {
             0%, 100% { opacity: 1; }
@@ -171,7 +147,6 @@
         }
 
         .nav-links { display: flex; align-items: center; gap: 8px; }
-        
         .nav-links a { 
             text-decoration: none; 
             color: var(--text-secondary); 
@@ -182,11 +157,6 @@
             transition: all 0.3s ease;
         }
 
-        .nav-links a:hover {
-            color: var(--text-primary);
-            background: var(--bg-gray);
-        }
-
         .btn-primary { 
             background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
             color: white !important; 
@@ -194,12 +164,6 @@
             box-shadow: 0 4px 16px rgba(255, 77, 23, 0.25);
         }
 
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 24px rgba(255, 77, 23, 0.35);
-        }
-
-        /* ===== HERO ===== */
         .hero {
             height: 70vh;
             min-height: 600px;
@@ -213,183 +177,75 @@
         }
 
         #bgVideo {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            min-width: 100%;
-            min-height: 100%;
-            width: auto;
-            height: auto;
-            z-index: -1;
-            transform: translate(-50%, -50%);
-            object-fit: cover;
-            filter: brightness(0.7);
+            position: absolute; top: 50%; left: 50%;
+            min-width: 100%; min-height: 100%;
+            width: auto; height: auto;
+            z-index: -1; transform: translate(-50%, -50%);
+            object-fit: cover; filter: brightness(0.7);
         }
 
         .hero-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%;
             background: linear-gradient(135deg, rgba(26, 11, 46, 0.7) 0%, rgba(255, 77, 23, 0.3) 100%);
             z-index: 0;
         }
 
-        .hero-content { 
-            position: relative; 
-            z-index: 1; 
-            padding: 0 20px; 
-            max-width: 900px;
-            animation: fadeInUp 1s ease-out;
-        }
+        .hero-content { position: relative; z-index: 1; padding: 0 20px; max-width: 900px; animation: fadeInUp 1s ease-out; }
 
         @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(40px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .hero h1 { 
             font-family: 'Poppins', sans-serif; 
             font-size: clamp(42px, 6vw, 72px); 
-            font-weight: 800;
-            margin-bottom: 20px; 
+            font-weight: 800; 
             letter-spacing: -2px;
-            text-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            margin-bottom: 20px;
         }
 
-        .hero p {
-            font-size: clamp(18px, 2vw, 26px);
-            opacity: 0.95;
-            margin-bottom: 40px;
-            text-shadow: 0 2px 8px rgba(0,0,0,0.2);
-        }
+        .hero p { font-size: clamp(18px, 2vw, 26px); opacity: 0.95; }
 
-        /* ===== CATEGORIAS ===== */
         .categories-nav {
-            display: flex;
-            justify-content: center;
-            gap: 16px;
-            margin-top: -40px;
-            position: relative;
-            z-index: 10;
-            flex-wrap: wrap;
-            padding: 0 5%;
+            display: flex; justify-content: center; gap: 16px;
+            margin-top: -40px; position: relative; z-index: 10;
+            flex-wrap: wrap; padding: 0 5%;
         }
 
         .cat-btn {
-            background: white;
-            border: 2px solid var(--border-light);
-            padding: 16px 32px;
-            border-radius: 60px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 700;
-            color: var(--navy);
-            box-shadow: var(--shadow-lg);
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            background: white; border: 2px solid var(--border-light);
+            padding: 16px 32px; border-radius: 60px;
+            cursor: pointer; transition: all 0.3s ease;
+            font-weight: 700; color: var(--navy);
+            box-shadow: var(--shadow-lg); font-size: 14px;
+            display: flex; align-items: center; gap: 8px;
         }
 
-        .cat-btn:hover {
-            border-color: var(--primary);
-            color: var(--primary);
-            transform: translateY(-5px);
-        }
+        .cat-btn:hover { border-color: var(--primary); color: var(--primary); transform: translateY(-5px); }
+        .cat-btn.active { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%); color: white; border-color: var(--primary); }
 
-        .cat-btn.active {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
-            color: white;
-            border-color: var(--primary);
-        }
-
-        /* ===== MAIN ===== */
-        .main-content { 
-            padding: 80px 5% 100px; 
-            max-width: 1400px; 
-            margin: 0 auto; 
-        }
-
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 40px;
-        }
-
-        .section-title {
-            font-family: 'Poppins', sans-serif;
-            font-size: 36px;
-            font-weight: 800;
-            color: var(--navy);
-            letter-spacing: -1px;
-        }
-
-        /* ===== GRID ===== */
-        .grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); 
-            gap: 32px; 
-        }
-
-        /* ===== CARDS ===== */
+        .main-content { padding: 80px 5% 100px; max-width: 1400px; margin: 0 auto; }
+        .section-title { font-family: 'Poppins', sans-serif; font-size: 36px; font-weight: 800; color: var(--navy); margin-bottom: 40px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 32px; }
+        
         .card { 
-            background: white; 
-            border-radius: 16px; 
-            overflow: hidden; 
-            border: 1px solid var(--border-light); 
-            transition: all 0.4s ease;
-            text-decoration: none; 
-            color: inherit;
-            cursor: pointer;
-            position: relative;
+            background: white; border-radius: 16px; overflow: hidden; 
+            border: 1px solid var(--border-light); transition: all 0.4s ease;
+            text-decoration: none; color: inherit; cursor: pointer;
         }
-
-        .card.hidden { display: none; }
-
-        .card:hover { 
-            transform: translateY(-8px); 
-            box-shadow: var(--shadow-xl); 
-        }
-
-        .card-img-container {
-            width: 100%;
-            aspect-ratio: 16/10;
-            overflow: hidden;
-            position: relative;
-            background: var(--bg-dark);
-        }
-
-        .card-img { 
-            width: 100%; 
-            height: 100%;
-            object-fit: cover; 
-            transition: transform 0.6s ease;
-        }
-
-        .card:hover .card-img { 
-            transform: scale(1.1); 
-        }
+        .card:hover { transform: translateY(-8px); box-shadow: var(--shadow-xl); }
+        .card-img-container { width: 100%; aspect-ratio: 16/10; overflow: hidden; position: relative; }
+        .card-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+        .card:hover .card-img { transform: scale(1.1); }
 
         .card-badge {
-            position: absolute;
-            top: 16px;
-            right: 16px;
+            position: absolute; top: 16px; right: 16px;
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(8px);
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 700;
-            color: var(--primary);
+            padding: 6px 14px; border-radius: 20px;
+            font-size: 12px; font-weight: 700;
             z-index: 2;
         }
 
@@ -405,242 +261,60 @@
         }
 
         .card-category {
-            position: absolute;
-            top: 16px;
-            left: 16px;
+            position: absolute; top: 16px; left: 16px;
             background: rgba(26, 11, 46, 0.85);
-            backdrop-filter: blur(8px);
-            color: white;
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-            z-index: 2;
+            color: white; padding: 6px 14px;
+            border-radius: 20px; font-size: 12px;
+            font-weight: 600; z-index: 2;
         }
 
         .card-body { padding: 20px; }
-
-        .card-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 8px;
+        .card-title { font-weight: 700; font-size: 20px; color: var(--navy); margin-bottom: 10px; }
+        .card-location { font-size: 13px; color: var(--text-muted); margin-bottom: 8px; }
+        
+        .card-status { 
+            font-size: 13px; font-weight: 600; 
+            display: inline-flex; align-items: center; gap: 6px;
+            margin-bottom: 10px;
         }
+        .status-dot { width: 8px; height: 8px; border-radius: 50%; animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        .status-open { color: var(--status-open); }
+        .status-open .status-dot { background: var(--status-open); }
+        .status-closed { color: var(--status-closed); }
+        .status-closed .status-dot { background: var(--status-closed); }
+        
+        .card-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+        .tag { font-size: 11px; background: var(--bg-gray); padding: 4px 8px; border-radius: 6px; color: var(--text-muted); }
 
-        .card-title { 
-            font-weight: 700; 
-            font-size: 20px; 
-            color: var(--navy); 
-            margin-bottom: 6px;
-            line-height: 1.3;
-            flex: 1;
-        }
-
-        .card-rating {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            background: var(--bg-gray);
-            padding: 4px 10px;
-            border-radius: 20px;
-            flex-shrink: 0;
-        }
-
-        .star {
-            color: var(--accent);
-            font-size: 14px;
-        }
-
-        .rating-value {
-            font-weight: 700;
-            font-size: 13px;
-            color: var(--text-primary);
-        }
-
-        .rating-qv {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
-            color: white;
-        }
-
-        .rating-qv .star {
-            color: white;
-        }
-
-        .rating-qv .rating-value {
-            color: white;
-        }
-
-        .rating-google {
-            position: relative;
-        }
-
-        .rating-google::after {
-            content: 'Google';
-            font-size: 9px;
-            opacity: 0.7;
-            margin-left: 2px;
-        }
-
-        .card-location {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            color: var(--text-muted);
-            font-size: 14px;
-            margin-bottom: 12px;
-        }
-
-        .card-status {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 13px;
-            font-weight: 600;
-            margin-top: 4px;
-        }
-
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            animation: pulse 2s infinite;
-        }
-
-        .status-open .status-dot {
-            background: var(--status-open);
-        }
-
-        .status-closed .status-dot {
-            background: var(--status-closed);
-        }
-
-        .status-open {
-            color: var(--status-open);
-        }
-
-        .status-closed {
-            color: var(--status-closed);
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-
-        .card-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-top: 12px;
-            border-top: 1px solid var(--border-light);
-        }
-
-        .card-price {
-            font-weight: 700;
-            font-size: 16px;
-            color: var(--primary);
-        }
-
-        .card-info-tags {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-
-        .tag { 
-            font-size: 12px;
-            color: var(--text-muted);
-            background: var(--bg-gray);
-            padding: 4px 10px;
-            border-radius: 6px;
-        }
-
-        .delivery-tag {
-            background: linear-gradient(135deg, #10B981 0%, #059669 100%);
-            color: white;
-            font-weight: 600;
-        }
-
-        /* ===== LOADING ===== */
-        .loading { 
-            text-align: center; 
-            padding: 100px 20px; 
-        }
-
+        .loading { text-align: center; padding: 100px 20px; }
         .spinner { 
-            width: 50px; 
-            height: 50px; 
+            width: 50px; height: 50px; 
             border: 4px solid var(--border); 
             border-top-color: var(--primary); 
             border-radius: 50%; 
             animation: spin 0.8s linear infinite; 
-            margin: 0 auto 20px;
+            margin: 0 auto 20px; 
         }
+        @keyframes spin { to { transform: rotate(360deg); } }
 
-        @keyframes spin { 
-            to { transform: rotate(360deg); } 
-        }
+        footer { background: var(--navy); color: white; padding: 60px 5% 30px; text-align: center; }
+        .footer-bottom { border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 30px; margin-top: 30px; opacity: 0.6; font-size: 14px; }
 
-        .loading-small {
-            display: inline-block;
-            width: 12px;
-            height: 12px;
-            border: 2px solid var(--border);
-            border-top-color: var(--accent);
-            border-radius: 50%;
-            animation: spin 0.6s linear infinite;
-            margin-left: 6px;
-        }
-
-        /* ===== FOOTER ===== */
-        footer {
-            background: var(--navy);
-            color: white;
-            padding: 60px 5% 30px;
-        }
-
-        .footer-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .footer-content h3 {
-            font-size: 24px;
-            margin-bottom: 16px;
-        }
-
-        .footer-bottom {
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding-top: 30px;
-            margin-top: 30px;
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 14px;
-        }
-
-        /* ===== RESPONSIVE ===== */
         @media (max-width: 768px) {
-            header { padding: 16px 5%; }
             .search-container { display: none; }
             .nav-links a:not(.btn-primary) { display: none; }
-            .hero { height: 60vh; min-height: 500px; }
-            .categories-nav { gap: 10px; margin-top: -30px; }
-            .cat-btn { padding: 12px 20px; font-size: 13px; }
             .grid { grid-template-columns: 1fr; gap: 20px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- ===== HEADER ===== -->
     <header id="main-header">
         <a href="index.html" class="logo-container">
             <img src="logo-qualvai.png" alt="QualVai Logo" class="logo-icon" onerror="this.style.display='none'">
-            <div class="logo-text">
-                <span class="qual">Qual</span><span class="vai">Vai</span>
-            </div>
+            <div class="logo-text"><span class="qual">Qual</span><span class="vai">Vai</span></div>
         </a>
-
         <div class="search-container">
             <div class="search-bar">
                 <svg class="search-icon" viewBox="0 0 20 20" fill="currentColor">
@@ -650,180 +324,66 @@
                 <span class="ia-badge" id="iaBadge">🧠 IA</span>
             </div>
         </div>
-
         <nav class="nav-links">
             <a href="pesquisa.html">Pesquisa Avançada</a>
             <a href="#anunciar" class="btn-primary">Anunciar</a>
         </nav>
     </header>
 
-    <!-- ===== HERO ===== -->
     <section class="hero">
-        <video autoplay muted loop playsinline id="bgVideo">
-            <source src="ES.mp4" type="video/mp4">
-        </video>
-        
+        <video autoplay muted loop playsinline id="bgVideo"><source src="ES.mp4" type="video/mp4"></video>
         <div class="hero-overlay"></div>
-
         <div class="hero-content">
             <h1>Viva o melhor do ES</h1>
             <p>Busca inteligente com IA + avaliações em tempo real</p>
         </div>
     </section>
 
-    <!-- ===== CATEGORIAS ===== -->
     <div class="categories-nav">
-        <button class="cat-btn active" data-category="todos">
-            <span>✨</span> Todos
-        </button>
-        <button class="cat-btn" data-category="restaurante">
-            <span>🍴</span> Restaurantes
-        </button>
-        <button class="cat-btn" data-category="bar">
-            <span>🍻</span> Bares
-        </button>
-        <button class="cat-btn" data-category="cafe">
-            <span>☕</span> Cafés
-        </button>
-        <button class="cat-btn" data-category="cultura">
-            <span>🎭</span> Cultura
-        </button>
-        <button class="cat-btn" data-category="natureza">
-            <span>🌳</span> Natureza
-        </button>
+        <button class="cat-btn active" data-category="todos"><span>✨</span> Todos</button>
+        <button class="cat-btn" data-category="restaurante"><span>🍴</span> Restaurantes</button>
+        <button class="cat-btn" data-category="bar"><span>🍻</span> Bares</button>
+        <button class="cat-btn" data-category="cafe"><span>☕</span> Cafés</button>
+        <button class="cat-btn" data-category="cultura"><span>🎭</span> Cultura</button>
+        <button class="cat-btn" data-category="natureza"><span>🌳</span> Natureza</button>
     </div>
 
-    <!-- ===== MAIN ===== -->
     <main class="main-content">
-        <div class="section-header">
-            <h2 class="section-title">Em destaque</h2>
-        </div>
-
-        <!-- Loading -->
+        <h2 class="section-title">Em destaque</h2>
         <div class="loading" id="loading">
             <div class="spinner"></div>
             <p>Carregando dados da planilha...</p>
         </div>
-
-        <!-- Grid -->
-        <div class="grid" id="placesGrid" style="display: none;">
-            <!-- Cards serão inseridos aqui -->
-        </div>
+        <div class="grid" id="placesGrid" style="display: none;"></div>
     </main>
 
-    <!-- ===== FOOTER ===== -->
     <footer>
-        <div class="footer-content">
-            <h3>QualVai</h3>
-            <p style="color: rgba(255,255,255,0.7); font-size: 14px; max-width: 600px; margin: 0 auto;">
-                Descubra os melhores lugares de Vila Velha com busca inteligente por IA e avaliações em tempo real.
-            </p>
-        </div>
-        <div class="footer-bottom">
-            © 2026 QualVai. IA Local + Google Sheets + Google Places API. Feito com ❤️ no ES.
-        </div>
+        <h3 style="margin-bottom: 16px">QualVai</h3>
+        <p style="opacity: 0.7">Descubra os melhores lugares de Vila Velha com busca inteligente por IA</p>
+        <div class="footer-bottom">© 2026 QualVai. IA Local + Google Places. Feito com ❤️ no ES.</div>
     </footer>
 
-    <!-- ===== JAVASCRIPT PRINCIPAL ===== -->
     <script>
-        // ===== CONFIGURAÇÃO =====
         const SHEET_ID = '1tKwZvr27lHo2iV2rR6yxiPqxGgbP517auUOBib1DBcI';
         const SHEET_NAME = 'lugares';
-
+        
+        // ✅ VARIÁVEL GLOBAL (acessível pelo module)
         window.placesData = [];
         let currentCategory = 'todos';
-        let googlePlacesService = null;
-        let searchDebounceTimer = null;
 
-        // ===== INICIALIZAR GOOGLE PLACES =====
-        window.onGooglePlacesReady = function() {
-            const div = document.createElement('div');
-            googlePlacesService = new google.maps.places.PlacesService(div);
-            console.log('✅ Google Places Service pronto!');
-            
-            if (placesData.length > 0) {
-                updatePlacesWithGoogleData();
-            }
-        };
+        function initMap() { console.log('✅ Google Places Ready'); }
 
-        // ===== BUSCAR DETALHES DO GOOGLE PLACES =====
-        function fetchGooglePlacesDetails(place, cardElement) {
-            if (!place.placeId || !googlePlacesService) {
-                return;
-            }
-
-            googlePlacesService.getDetails({
-                placeId: place.placeId,
-                fields: ['rating', 'user_ratings_total', 'opening_hours']
-            }, (result, status) => {
-                if (status === google.maps.places.PlacesServiceStatus.OK) {
-                    if (result.rating) {
-                        const ratingEl = cardElement.querySelector('.rating-google .rating-value');
-                        if (ratingEl) {
-                            const loading = ratingEl.querySelector('.loading-small');
-                            if (loading) loading.remove();
-                            
-                            ratingEl.innerHTML = result.rating.toFixed(1);
-                            const countSpan = document.createElement('span');
-                            countSpan.style.fontSize = '10px';
-                            countSpan.style.opacity = '0.7';
-                            countSpan.style.marginLeft = '3px';
-                            countSpan.textContent = `(${result.user_ratings_total})`;
-                            ratingEl.appendChild(countSpan);
-                        }
-                    }
-
-                    if (result.opening_hours) {
-                        const isOpen = result.opening_hours.isOpen();
-                        const statusEl = cardElement.querySelector('.card-status');
-                        if (statusEl) {
-                            const loading = statusEl.querySelector('.loading-small');
-                            if (loading) loading.remove();
-                            
-                            statusEl.className = `card-status ${isOpen ? 'status-open' : 'status-closed'}`;
-                            statusEl.innerHTML = `
-                                <span class="status-dot"></span>
-                                ${isOpen ? 'Aberto agora' : 'Fechado'}
-                            `;
-                        }
-                    }
-                }
-            });
-        }
-
-        function updatePlacesWithGoogleData() {
-            if (!googlePlacesService) return;
-            
-            const cards = document.querySelectorAll('.card[data-placeid]');
-            cards.forEach(card => {
-                const placeId = card.dataset.placeid;
-                const place = placesData.find(p => p.placeId === placeId);
-                if (place) {
-                    fetchGooglePlacesDetails(place, card);
-                }
-            });
-        }
-
-        // ===== FUNÇÃO CALLBACK PARA JSONP =====
         function handleSheetData(data) {
-            console.log('✅ Dados recebidos via JSONP!');
-            
             try {
                 const rows = data.table.rows;
                 window.placesData = [];
 
-                console.log(`📊 Total de linhas recebidas: ${rows.length}`);
-
                 rows.forEach((row, index) => {
                     const c = row.c;
                     const name = c[0]?.v || c[0]?.f || '';
-                    
-                    if (!name.trim()) {
-                        console.log(`⏭️ Linha ${index + 1}: Vazia (sem nome)`);
-                        return;
-                    }
+                    if (!name.trim()) return;
 
-                    const place = {
+                    window.placesData.push({
                         id: index,
                         name: name,
                         category: (c[1]?.v || c[1]?.f || 'outros').toLowerCase().trim(),
@@ -840,288 +400,122 @@
                         payment: c[12]?.v || c[12]?.f || '',
                         ratingQV: parseFloat(c[13]?.v || c[13]?.f || 0),
                         areaKids: (c[14]?.v || c[14]?.f || '').toLowerCase() === 'sim'
-                    };
-
-                    window.placesData.push(place);
-                    console.log(`✅ Linha ${index + 1}: ${place.name}`);
+                    });
                 });
 
-                console.log(`✅ ${placesData.length} lugares carregados!`);
-
-                // Ordenar: Destaques primeiro
+                // Ordenar: destaques primeiro
                 window.placesData.sort((a, b) => {
                     if (a.featured && !b.featured) return -1;
                     if (!a.featured && b.featured) return 1;
                     return 0;
                 });
 
-                localStorage.setItem('qualvai_cache', JSON.stringify({
-                    data: placesData,
-                    timestamp: Date.now()
-                }));
-
-                window.renderPlaces(window.placesData);
-
-                if (googlePlacesService) {
-                    updatePlacesWithGoogleData();
-                }
-
-            } catch (error) {
-                console.error('❌ Erro ao processar dados:', error);
-                tryLoadFromCache();
+                console.log(`✅ ${window.placesData.length} lugares carregados!`);
+                renderPlaces(window.placesData);
+            } catch (e) { 
+                console.error("❌ Erro:", e); 
             }
         }
 
-        // ===== BUSCAR DADOS VIA JSONP =====
         function fetchPlacesFromSheet() {
-            console.log('🔄 Buscando dados via JSONP...');
-
             const script = document.createElement('script');
             script.src = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=responseHandler:handleSheetData&sheet=${SHEET_NAME}`;
-            
-            script.onerror = function() {
-                console.error('❌ Erro ao carregar script do Google Sheets');
-                tryLoadFromCache();
-            };
-
             document.head.appendChild(script);
         }
 
-        // ===== TENTAR CARREGAR DO CACHE =====
-        function tryLoadFromCache() {
-            const cache = localStorage.getItem('qualvai_cache');
-            
-            if (cache) {
-                const cached = JSON.parse(cache);
-                const cacheAge = Date.now() - cached.timestamp;
-                
-                if (cacheAge < 3600000) {
-                    console.log('📦 Usando dados do cache');
-                    placesData = cached.data;
-                    window.renderPlaces(window.placesData);
-                    return true;
-                }
-            }
-            
-            const loading = document.getElementById('loading');
-            loading.innerHTML = `
-                <div style="color: var(--primary);">
-                    <p style="font-size: 24px; margin-bottom: 16px;">⚠️ Erro ao carregar dados</p>
-                    <p style="color: var(--text-secondary);">Verifique se a planilha está pública e tente novamente.</p>
-                    <button onclick="location.reload()" style="
-                        background: var(--primary);
-                        color: white;
-                        border: none;
-                        padding: 12px 32px;
-                        border-radius: 8px;
-                        font-weight: 600;
-                        cursor: pointer;
-                        margin-top: 20px;
-                    ">Tentar Novamente</button>
-                </div>
-            `;
-            
-            return false;
-        }
-
-        // ===== CATEGORIA NOME =====
-        function getCategoryName(category) {
-            const names = {
-                'restaurante': 'Restaurante',
-                'bar': 'Bar',
-                'cafe': 'Café',
-                'cultura': 'Cultura',
-                'natureza': 'Natureza',
-                'compras': 'Compras'
-            };
-            return names[category] || category.charAt(0).toUpperCase() + category.slice(1);
-        }
-
-        // ===== RENDERIZAR PLACES =====
-        window.renderPlaces = function(placesToRender = window.placesData) {
+        // ✅ FUNÇÃO GLOBAL (acessível pelo module)
+        window.renderPlaces = function(data) {
             const grid = document.getElementById('placesGrid');
             const loading = document.getElementById('loading');
-
-            grid.innerHTML = '';
-
-            if (placesToRender.length === 0) {
-                grid.innerHTML = '<p style="text-align:center; grid-column: 1/-1; color: var(--text-muted);">Nenhum lugar encontrado</p>';
-                loading.style.display = 'none';
-                grid.style.display = 'grid';
-                return;
-            }
-
-            placesToRender.forEach(place => {
-                const card = document.createElement('div');
-                card.className = 'card';
-                card.dataset.id = place.id;
-                if (place.placeId) card.dataset.placeid = place.placeId;
-
+            
+            grid.innerHTML = data.map(place => {
                 const isOpen = place.status === 'aberto';
-                let statusHtml = `
-                    <div class="card-status ${isOpen ? 'status-open' : 'status-closed'}">
-                        <span class="status-dot"></span>
-                        ${isOpen ? 'Aberto agora' : 'Fechado'}
-                        ${place.placeId ? '<span class="loading-small"></span>' : ''}
-                    </div>
-                `;
-
-                let deliveryBadge = '';
-                if (place.delivery) {
-                    deliveryBadge = `<span class="tag delivery-tag">🛵 Delivery</span>`;
-                }
-
-                let paymentIcons = '';
-                if (place.payment) {
-                    const payments = place.payment.toLowerCase();
-                    const icons = [];
-                    
-                    if (payments.includes('dinheiro')) icons.push('💵');
-                    if (payments.includes('cartão') || payments.includes('cartao')) icons.push('💳');
-                    if (payments.includes('pix')) icons.push('📱');
-                    if (payments.includes('voucher')) icons.push('🎫');
-                    if (payments.includes('ifood')) icons.push('🍔');
-                    if (payments.includes('rappi')) icons.push('🛒');
-                    
-                    if (icons.length > 0) {
-                        paymentIcons = `
-                            <div style="display: flex; gap: 4px; margin-top: 8px;">
-                                ${icons.map(icon => `<span style="font-size: 16px;">${icon}</span>`).join('')}
-                            </div>
-                        `;
-                    }
-                }
-
-                let ratingsHtml = '';
-                if (place.ratingQV > 0) {
-                    ratingsHtml += `
-                        <div class="card-rating rating-qv" title="Avaliação QualVai">
-                            <span class="star">★</span>
-                            <span class="rating-value">${place.ratingQV.toFixed(1)}</span>
+                return `
+                    <div class="card">
+                        <div class="card-img-container">
+                            <span class="card-category">${place.category.charAt(0).toUpperCase() + place.category.slice(1)}</span>
+                            ${place.featured ? '<span class="card-badge featured">⭐ Destaque</span>' : ''}
+                            ${place.areaKids ? '<span class="card-badge kids">👶 Kids</span>' : ''}
+                            <img src="${place.image}" class="card-img" onerror="this.src='https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=400'">
                         </div>
-                    `;
-                }
-                if (place.rating > 0 || place.placeId) {
-                    ratingsHtml += `
-                        <div class="card-rating rating-google">
-                            <span class="star">★</span>
-                            <span class="rating-value">
-                                ${place.rating > 0 ? place.rating.toFixed(1) : '...'}
-                                ${place.placeId && place.rating === 0 ? '<span class="loading-small"></span>' : ''}
-                            </span>
-                        </div>
-                    `;
-                }
-
-                card.innerHTML = `
-                    <div class="card-img-container">
-                        <span class="card-category">${getCategoryName(place.category)}</span>
-                        ${place.featured ? '<span class="card-badge featured">⭐ Destaque</span>' : ''}
-                        ${place.areaKids ? '<span class="card-badge kids">👶 Kids</span>' : ''}
-                        <img src="${place.image}" class="card-img" alt="${place.name}" onerror="this.src='https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=400'">
-                    </div>
-                    <div class="card-body">
-                        <div class="card-top">
+                        <div class="card-body">
                             <h3 class="card-title">${place.name}</h3>
-                        </div>
-                        <div style="display: flex; gap: 6px; margin-bottom: 12px;">
-                            ${ratingsHtml}
-                        </div>
-                        <div class="card-location">
-                            <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor">
-                                <path d="M7 0C4.24 0 2 2.24 2 5c0 3.5 5 9 5 9s5-5.5 5-9c0-2.76-2.24-5-5-5zm0 7a2 2 0 110-4 2 2 0 010 4z"/>
-                            </svg>
-                            ${place.location}${place.distance ? ' · ' + place.distance : ''}
-                        </div>
-                        ${statusHtml}
-                        ${paymentIcons}
-                        <div class="card-footer">
-                            <div class="card-info-tags">
-                                ${deliveryBadge}
-                                ${place.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                            <p class="card-location">📍 ${place.location}${place.distance ? ' · ' + place.distance : ''}</p>
+                            <div class="card-status ${isOpen ? 'status-open' : 'status-closed'}">
+                                <span class="status-dot"></span>${isOpen ? 'Aberto agora' : 'Fechado'}
                             </div>
-                            ${place.price ? `<span class="card-price">${place.price}</span>` : ''}
+                            <div class="card-tags">${place.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
                         </div>
                     </div>
                 `;
-
-                grid.appendChild(card);
-
-                if (place.placeId && googlePlacesService) {
-                    fetchGooglePlacesDetails(place, card);
-                }
-            });
-
+            }).join('');
+            
             loading.style.display = 'none';
             grid.style.display = 'grid';
         }
 
-        // ===== BUSCA HÍBRIDA COM IA (DEBOUNCE 400ms) =====
+        // ===== BUSCA COM DEBOUNCE =====
         const searchInput = document.getElementById('searchInput');
         const iaBadge = document.getElementById('iaBadge');
+        let debounceTimer;
 
         searchInput.addEventListener('input', (e) => {
-            clearTimeout(searchDebounceTimer);
-            
+            clearTimeout(debounceTimer);
             const termo = e.target.value.toLowerCase().trim();
             
+            console.log('🔍 Busca:', termo);
+
             if (termo.length === 0) {
                 iaBadge.classList.remove('active');
                 window.renderPlaces(window.placesData);
                 return;
             }
 
-            searchDebounceTimer = setTimeout(async () => {
-                // Se IA estiver pronta, usar busca inteligente
+            debounceTimer = setTimeout(async () => {
                 if (window.buscaInteligente && typeof window.buscaInteligente === 'function') {
-                    console.log('🧠 Usando busca por IA...');
+                    console.log('🧠 Usando IA!');
                     iaBadge.classList.add('active');
                     await window.buscaInteligente(termo);
                 } else {
-                    // Fallback: Busca tradicional
-                    console.log('🔍 Usando busca tradicional...');
+                    console.log('🔍 IA não pronta, busca literal');
                     iaBadge.classList.remove('active');
                     
                     const ruidos = ["de", "do", "da", "com", "para", "em", "um", "uma"];
-                    const palavrasBusca = termo.split(/\s+/).filter(p => !ruidos.includes(p));
+                    const palavras = termo.split(/\s+/).filter(p => !ruidos.includes(p));
                     
-                    const filtrados = window.placesData.filter(place => {
-                        const textoLocal = `${place.name} ${place.category} ${place.tags.join(' ')}`.toLowerCase();
-                        
-                        return palavrasBusca.some(palavra => {
+                    const filtrados = window.placesData.filter(p => {
+                        const texto = `${p.name} ${p.category} ${p.tags.join(' ')}`.toLowerCase();
+                        return palavras.some(palavra => {
                             const radical = palavra.length > 4 ? palavra.substring(0, palavra.length - 1) : palavra;
-                            return textoLocal.includes(radical);
+                            return texto.includes(radical);
                         });
                     });
                     
-                    renderPlaces(filtrados);
+                    window.renderPlaces(filtrados);
                 }
-            }, 400); // Debounce de 400ms
+            }, 400);
         });
 
-        // ===== FILTRAR POR CATEGORIA =====
-        function filterByCategory(category) {
-            currentCategory = category;
-            iaBadge.classList.remove('active');
-            searchInput.value = '';
-
-            if (category === 'todos') {
-                window.renderPlaces(window.placesData);
-            } else {
-                const filtered = window.placesData.filter(p => p.category === category);
-                window.renderPlaces(filtered);
-            }
-        }
-
-        // ===== EVENT LISTENERS =====
+        // Categorias
         document.querySelectorAll('.cat-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                 document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
                 this.classList.add('active');
-                filterByCategory(this.dataset.category);
+                
+                const category = this.dataset.category;
+                iaBadge.classList.remove('active');
+                searchInput.value = '';
+
+                if (category === 'todos') {
+                    window.renderPlaces(window.placesData);
+                } else {
+                    const filtered = window.placesData.filter(p => p.category === category);
+                    window.renderPlaces(filtered);
+                }
             });
         });
 
+        // Scroll header
         window.addEventListener('scroll', () => {
             const header = document.getElementById('main-header');
             if (window.pageYOffset > 50) {
@@ -1131,64 +525,28 @@
             }
         });
 
-        const video = document.getElementById('bgVideo');
-        if (video) {
-            const startTime = 80;
-            const endTime = 95;
-
-            video.addEventListener('timeupdate', function() {
-                if (this.currentTime >= endTime) {
-                    this.currentTime = startTime;
-                    this.play();
-                }
-            });
-
-            video.addEventListener('loadedmetadata', function() {
-                this.currentTime = startTime;
-            });
-        }
-
-        // ===== INICIALIZAR =====
-        document.addEventListener('DOMContentLoaded', () => {
-            const cache = localStorage.getItem('qualvai_cache');
-            if (cache) {
-                const cached = JSON.parse(cache);
-                const cacheAge = Date.now() - cached.timestamp;
-
-                if (cacheAge < 3600000) {
-                    console.log('📦 Usando cache');
-                    placesData = cached.data;
-                    window.renderPlaces();
-                    return;
-                }
-            }
-
-            fetchPlacesFromSheet();
-        });
+        // Init
+        document.addEventListener('DOMContentLoaded', fetchPlacesFromSheet);
     </script>
 
-    <!-- ===== MÓDULO DE IA COM TRANSFORMERS.JS ===== -->
     <script type="module">
         import { pipeline, cos_sim } from 'https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.1';
-        
+
         let extrator;
         let baseConhecimentoIA = [];
 
         async function inicializarIA() {
-            console.log("🧠 IA: Preparando cérebro local...");
             try {
+                console.log("🧠 IA: Preparando cérebro local...");
                 extrator = await pipeline('feature-extraction', 'Xenova/all-MiniLM-L6-v2');
                 console.log("✅ IA: Pronta!");
-                
-                // Gerar o mapa de conhecimento da planilha
                 await gerarMapaMental();
-            } catch (error) {
-                console.error("❌ IA: Erro ao inicializar:", error);
+            } catch (e) { 
+                console.error("❌ IA: Erro ao inicializar:", e); 
             }
         }
 
         async function gerarMapaMental() {
-            // Aguardar placesData estar disponível
             if (!window.placesData || window.placesData.length === 0) {
                 console.log("⏳ IA: Aguardando dados...");
                 return setTimeout(gerarMapaMental, 1000);
@@ -1203,17 +561,17 @@
                     const output = await extrator(textoParaIA, { pooling: 'mean', normalize: true });
                     baseConhecimentoIA.push({ ...local, vetor: output });
                 } catch (error) {
-                    console.warn(`⚠️ IA: Erro ao processar "${local.name}":`, error);
+                    console.warn(`⚠️ IA: Erro ao processar "${local.name}"`);
                 }
             }
             
             console.log(`🚀 IA: Conhecimento concluído! ${baseConhecimentoIA.length} lugares mapeados.`);
         }
 
-        // ESSA FUNÇÃO FAZ A MÁGICA DA BUSCA SEMÂNTICA
+        // ✅ FUNÇÃO GLOBAL
         window.buscaInteligente = async function(pergunta) {
             if (!extrator || !baseConhecimentoIA.length) {
-                console.warn("⚠️ IA ainda não está pronta. Usando busca tradicional.");
+                console.warn("⚠️ IA ainda não está pronta");
                 return;
             }
 
@@ -1227,7 +585,7 @@
                     return { ...local, score: similaridade };
                 });
                 
-                // Filtro rigoroso: score > 0.25 para evitar resultados genéricos
+                // ✅ FILTRO RIGOROSO: 0.25 (como você pediu)
                 const sugeridos = resultados
                     .filter(r => r.score > 0.25)
                     .sort((a, b) => b.score - a.score);
@@ -1238,7 +596,6 @@
                     console.log(`🎯 Melhor match: "${sugeridos[0].name}" (score: ${sugeridos[0].score.toFixed(3)})`);
                 }
                 
-                // Chamar a função de renderização global
                 window.renderPlaces(sugeridos);
                 
             } catch (error) {
@@ -1246,9 +603,7 @@
             }
         }
 
-        // Inicializar IA
         inicializarIA();
     </script>
-
 </body>
 </html>
